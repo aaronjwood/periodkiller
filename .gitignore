@@ -1,6 +1,5 @@
 bin/*
 publish/*
 obj/*
-*.user
 *.pfx
 *.ico
