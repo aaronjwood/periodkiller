@@ -3,3 +3,4 @@ publish/*
 obj/*
 *.user
 *.pfx
+*.ico
