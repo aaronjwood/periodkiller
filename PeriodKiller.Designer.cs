@@ -90,7 +90,7 @@
             // 
             this.programName.AutoSize = true;
             this.programName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.programName.ForeColor = System.Drawing.Color.Firebrick;
+            this.programName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(3)))), ((int)(((byte)(7)))));
             this.programName.Location = new System.Drawing.Point(95, 5);
             this.programName.Name = "programName";
             this.programName.Size = new System.Drawing.Size(160, 29);
@@ -144,7 +144,7 @@
             this.selectFolderLbl.Size = new System.Drawing.Size(0, 13);
             this.selectFolderLbl.TabIndex = 10;
             // 
-            // periodkiller
+            // PeriodKiller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -163,7 +163,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "periodkiller";
+            this.Name = "PeriodKiller";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Period Killer";
             this.ResumeLayout(false);

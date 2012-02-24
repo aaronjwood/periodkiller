@@ -7,14 +7,46 @@ namespace PeriodKiller
 {
     public partial class PeriodKiller : Form
     {
-        List<String> duplicates = new List<String>();
-        FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+        private List<String> duplicates = new List<String>();
+        private FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+        private int numPeriods = 0;
+        private int numRenames = 0;
 
         public PeriodKiller()
         {
             InitializeComponent();
-            duplicatesLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            duplicatesLabel.LinkBehavior = LinkBehavior.HoverUnderline;
             duplicatesLabel.LinkClicked += new LinkLabelLinkClickedEventHandler(duplicatesLabel_LinkClicked);
+        }
+
+        public void incrementPeriods()
+        {
+            numPeriods++;
+        }
+
+        public void incrementRenames()
+        {
+            numRenames++;
+        }
+
+        public void decrementPeriods()
+        {
+            numPeriods--;
+        }
+
+        public void decrementRenames()
+        {
+            numRenames--;
+        }
+
+        public List<String> getDuplicates()
+        {
+            return duplicates;
+        }
+
+        public LinkLabel getDuplicatesLabel()
+        {
+            return duplicatesLabel;
         }
 
         private void selectFolder_Click(object sender, EventArgs e)
@@ -42,8 +74,7 @@ namespace PeriodKiller
                 selectFolderLbl.Text = "";
                 String variable = variableRemoval.Text;
                 String[] directories = Directory.GetDirectories(folderDialog.SelectedPath);
-                int numPeriods = 0;
-                int numRenames = 0;
+                
                 DirectoryInfo directoryParent;
 
                 //A variable removal needs to be performed
@@ -78,7 +109,7 @@ namespace PeriodKiller
                                     numRenames--;
                                     if (!duplicates.Contains(directoryName))
                                     {
-                                        this.duplicates.Add(directoryName);
+                                        duplicates.Add(directoryName);
                                     }
                                     duplicatesLabel.Enabled = true;
                                     duplicatesLabel.Text = duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
@@ -88,33 +119,7 @@ namespace PeriodKiller
                     }
                 }
 
-                //Start removing the periods from folder names
-                string[] newdirectories = Directory.GetDirectories(folderDialog.SelectedPath);
-                foreach (String directory in newdirectories)
-                {
-                    if (directory.Contains("."))
-                    {
-                        try
-                        {
-                            //Remove period and increment the count of number of periods replaced
-                            numPeriods++;
-                            Directory.Move(directory, directory.Replace(".", " "));
-                        }
-                        catch (IOException ex)
-                        {
-                            //TODO more checks are needed here
-                            //TODO handle duplicates (prompt to overwrite, merge, etc.?)
-                            //We encountered a duplicate
-                            numPeriods--;
-                            if (!duplicates.Contains(directory))
-                            {
-                                this.duplicates.Add(directory);
-                            }
-                            duplicatesLabel.Enabled = true;
-                            duplicatesLabel.Text = duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
-                        }
-                    }
-                }
+                
 
                 //Notifications/error messages
                 //TODO consolidate this section a bit more. Maybe store messages in some kind of data structure for better organization/consistency?
