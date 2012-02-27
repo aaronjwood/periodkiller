@@ -7,46 +7,14 @@ namespace PeriodKiller
 {
     public partial class PeriodKiller : Form
     {
-        private List<String> duplicates = new List<String>();
         private FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-        private int numPeriods = 0;
-        private int numRenames = 0;
+        private FolderCleaner fCleaner = new FolderCleaner();
 
         public PeriodKiller()
         {
             InitializeComponent();
             duplicatesLabel.LinkBehavior = LinkBehavior.HoverUnderline;
             duplicatesLabel.LinkClicked += new LinkLabelLinkClickedEventHandler(duplicatesLabel_LinkClicked);
-        }
-
-        public void incrementPeriods()
-        {
-            numPeriods++;
-        }
-
-        public void incrementRenames()
-        {
-            numRenames++;
-        }
-
-        public void decrementPeriods()
-        {
-            numPeriods--;
-        }
-
-        public void decrementRenames()
-        {
-            numRenames--;
-        }
-
-        public List<String> getDuplicates()
-        {
-            return duplicates;
-        }
-
-        public LinkLabel getDuplicatesLabel()
-        {
-            return duplicatesLabel;
         }
 
         private void selectFolder_Click(object sender, EventArgs e)
@@ -61,9 +29,10 @@ namespace PeriodKiller
 
         private void fixFolders_Click(object sender, EventArgs e)
         {   
+            //Has the user selected a folder yet?
             if (folderDialog.SelectedPath != "")
             {
-                //Make sure a directory is selected and that the user hasn't deleted it manually after selecting it
+                //Make sure that the directory we're working with hasn't been deleted outside of the program after selecting it
                 if (!Directory.Exists(folderDialog.SelectedPath))
                 {
                     duplicatesLabel.Text = "";
@@ -72,78 +41,45 @@ namespace PeriodKiller
                     return;
                 }
                 selectFolderLbl.Text = "";
-                String variable = variableRemoval.Text;
-                String[] directories = Directory.GetDirectories(folderDialog.SelectedPath);
-                
-                DirectoryInfo directoryParent;
 
-                //A variable removal needs to be performed
                 if (variableRemoval.Text != "")
                 {
-                    foreach (String directoryName in directories)
-                    {
-                        //Get the parent of each directory and the actual directory name that we'll be working with
-                        directoryParent = Directory.GetParent(directoryName);
-                        String directory = directoryName.Substring(directoryName.LastIndexOf("\\")+1);
-
-                        if (directoryName.ToLower().Contains(variable.ToLower()))
-                        {
-                            //If there's an occurance of the variable in the directory name, convert the variable and directory name to lowercase
-                            String lowerDirectoryName = directoryName.ToLower();
-                            String lowerVariableRemoval = variable.ToLower();
-
-                            //Make sure we're not removing the entire folder name!
-                            if (directory.LastIndexOf(variable) >= 0 && directory.Substring(0, directory.LastIndexOf(variable)) != "")
-                            {
-                                try
-                                {
-                                    //Perform the rename with the variable removal and increment the number of directory renames
-                                    numRenames++;
-                                    Directory.Move(directoryParent + "\\" + directory, directoryParent + "\\" + directory.Substring(0, directory.LastIndexOf(variable)));
-                                }
-                                catch (IOException ex)
-                                {
-                                    //TODO handle duplicates (prompt to overwrite, merge, etc.?)
-                                    //TODO more checks are needed here
-                                    //The renaming process produced duplicates
-                                    numRenames--;
-                                    if (!duplicates.Contains(directoryName))
-                                    {
-                                        duplicates.Add(directoryName);
-                                    }
-                                    duplicatesLabel.Enabled = true;
-                                    duplicatesLabel.Text = duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
-                                }
-                            }
-                        }
-                    }
+                    //Remove a string from each folder
+                    fCleaner.removeText(folderDialog, variableRemoval.Text);
                 }
-
                 
+                //Just remove the periods
+                fCleaner.removePeriods(folderDialog);
+
+                if (fCleaner.getDuplicates().Count > 0)
+                {
+                    duplicatesLabel.Enabled = true;
+                    duplicatesLabel.Text = fCleaner.getDuplicates().Count + " collision(s) found when restructuring folders. Click here to view them.";
+                }
 
                 //Notifications/error messages
                 //TODO consolidate this section a bit more. Maybe store messages in some kind of data structure for better organization/consistency?
-                if (numPeriods == 0)
+                if (fCleaner.numPeriodRemovals() == 0)
                 {
-                    if (numRenames == 0)
+                    if (fCleaner.numFolderRenames() == 0)
                     {
                         MessageBox.Show("There were no folders with periods replaced or that had variable removals");
                     }
                     else
                     {
-                        MessageBox.Show("There were no periods to be replaced but there were "+numRenames+" variable removals performed");
+                        MessageBox.Show("There were no periods to be replaced but there were " + fCleaner.numFolderRenames() + " variable removals performed");
                     }
                     
                 }
                 else
                 {
-                    if(numRenames == 0)
+                    if (fCleaner.numFolderRenames() == 0)
                     {
-                        MessageBox.Show(numPeriods.ToString() + " folders had their periods successfully replaced with spaces.");
+                        MessageBox.Show(fCleaner.numPeriodRemovals().ToString() + " folders had their periods successfully replaced with spaces.");
                     }
                     else
                     {
-                        MessageBox.Show(numPeriods.ToString() + " folders had their periods successfully replaced with spaces and "+numRenames+" variable removals were performed");
+                        MessageBox.Show(fCleaner.numPeriodRemovals().ToString() + " folders had their periods successfully replaced with spaces and " + fCleaner.numFolderRenames() + " variable removals were performed");
                     }
                 }
             }
@@ -159,7 +95,7 @@ namespace PeriodKiller
             //TODO allow duplicate resolution here. Create options for each duplicate
             Collisions duplicatesForm = new Collisions();
             duplicatesForm.Owner = this;
-            foreach (String folder in duplicates)
+            foreach (String folder in fCleaner.getDuplicates())
             {
                 duplicatesForm.addItem = folder;
             }
