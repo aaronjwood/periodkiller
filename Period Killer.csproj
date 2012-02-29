@@ -128,25 +128,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FolderCleaner.cs" />
-    <Compile Include="PeriodKiller.cs">
+    <Compile Include="Class\FolderCleaner.cs" />
+    <Compile Include="Controls\PeriodKiller.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PeriodKiller.Designer.cs">
+    <Compile Include="Controls\PeriodKiller.Designer.cs">
       <DependentUpon>PeriodKiller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Collisions.cs">
+    <Compile Include="Controls\Collisions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Collisions.Designer.cs">
+    <Compile Include="Controls\Collisions.Designer.cs">
       <DependentUpon>Collisions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Class\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="PeriodKiller.resx">
+    <EmbeddedResource Include="Controls\PeriodKiller.resx">
       <DependentUpon>PeriodKiller.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Collisions.resx">
+    <EmbeddedResource Include="Controls\Collisions.resx">
       <DependentUpon>Collisions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -159,7 +159,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
+    <None Include="Config\app.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -193,6 +193,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
