@@ -40,6 +40,7 @@ namespace PeriodKiller
             }
         }
 
+        //TODO check if a period is in this field. If so, filter it
         public void removeText(FolderBrowserDialog selectedFolder, String variable)
         {
             String[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
@@ -93,6 +94,13 @@ namespace PeriodKiller
         public List<String> getDuplicates()
         {
             return duplicates;
+        }
+
+        //TODO after the operation has been performed on a folder, reset the counts
+        public void resetCounts()
+        {
+            numPeriods = 0;
+            numRenames = 0;
         }
     }
 }
