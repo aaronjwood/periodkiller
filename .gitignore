@@ -2,3 +2,4 @@ bin
 publish
 obj
 *.pfx
+*.suo
