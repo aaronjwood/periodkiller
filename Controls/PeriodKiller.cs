@@ -42,10 +42,10 @@ namespace PeriodKiller
                 }
                 selectFolderLbl.Text = "";
 
-                if (variableRemoval.Text != "")
+                if (folderVariableRemoval.Text != "")
                 {
                     //Remove a string from each folder
-                    fCleaner.removeText(folderDialog, variableRemoval.Text);
+                    fCleaner.removeText(folderDialog, folderVariableRemoval.Text);
                 }
                 
                 //Just remove the periods
@@ -100,6 +100,53 @@ namespace PeriodKiller
                 duplicatesForm.addItem = folder;
             }
             duplicatesForm.ShowDialog();
+        }
+
+        private void enableFilenameProcessing_CheckedChanged(object sender, EventArgs e)
+        {
+            if (enableFilenameProcessing.Checked)
+            {
+                fixFolders.Text = "Clean File and Folder Names";
+            }
+            else
+            {
+                fixFolders.Text = "Clean Folder Names";
+            }
+            //TODO implement removing periods from filename
+        }
+
+        private void enableFolderVariableRemoval_CheckedChanged(object sender, EventArgs e)
+        {
+            if (enableFolderVariableRemoval.Checked)
+            {
+                panel1.Visible = true;
+                panel4.Visible = true;
+            }
+            else
+            {
+                panel1.Visible = false;
+                if (panel3.Visible == false)
+                {
+                    panel4.Visible = false;
+                }
+            }
+        }
+
+        private void enableFilenameVariableRemoval_CheckedChanged(object sender, EventArgs e)
+        {
+            if (enableFilenameVariableRemoval.Checked)
+            {
+                panel3.Visible = true;
+                panel4.Visible = true;
+            }
+            else
+            {
+                panel3.Visible = false;
+                if (panel1.Visible == false)
+                {
+                    panel4.Visible = false;
+                }
+            }
         }
     }
 }
