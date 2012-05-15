@@ -40,7 +40,6 @@
             this.enableFilenameVariableRemoval = new System.Windows.Forms.CheckBox();
             this.enableFilenameProcessing = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.cleanFilenamesHeader = new System.Windows.Forms.Label();
@@ -50,11 +49,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.folderVariableRemoval = new System.Windows.Forms.TextBox();
             this.variableRemovalHeader = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // selectFolder
@@ -106,7 +106,7 @@
             // 
             this.programName.AutoSize = true;
             this.programName.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.programName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(116)))), ((int)(((byte)(3)))), ((int)(((byte)(7)))));
+            this.programName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.programName.Location = new System.Drawing.Point(172, 9);
             this.programName.Name = "programName";
             this.programName.Size = new System.Drawing.Size(160, 29);
@@ -138,9 +138,9 @@
             this.enableFolderVariableRemoval.AutoSize = true;
             this.enableFolderVariableRemoval.Location = new System.Drawing.Point(3, 20);
             this.enableFolderVariableRemoval.Name = "enableFolderVariableRemoval";
-            this.enableFolderVariableRemoval.Size = new System.Drawing.Size(115, 17);
+            this.enableFolderVariableRemoval.Size = new System.Drawing.Size(109, 17);
             this.enableFolderVariableRemoval.TabIndex = 14;
-            this.enableFolderVariableRemoval.Text = "Clean Folder Text?";
+            this.enableFolderVariableRemoval.Text = "Clean Folder Text";
             this.enableFolderVariableRemoval.UseVisualStyleBackColor = true;
             this.enableFolderVariableRemoval.CheckedChanged += new System.EventHandler(this.enableFolderVariableRemoval_CheckedChanged);
             // 
@@ -149,9 +149,9 @@
             this.enableFilenameVariableRemoval.AutoSize = true;
             this.enableFilenameVariableRemoval.Location = new System.Drawing.Point(3, 70);
             this.enableFilenameVariableRemoval.Name = "enableFilenameVariableRemoval";
-            this.enableFilenameVariableRemoval.Size = new System.Drawing.Size(128, 17);
+            this.enableFilenameVariableRemoval.Size = new System.Drawing.Size(122, 17);
             this.enableFilenameVariableRemoval.TabIndex = 15;
-            this.enableFilenameVariableRemoval.Text = "Clean Filename Text?";
+            this.enableFilenameVariableRemoval.Text = "Clean Filename Text";
             this.enableFilenameVariableRemoval.UseVisualStyleBackColor = true;
             this.enableFilenameVariableRemoval.CheckedChanged += new System.EventHandler(this.enableFilenameVariableRemoval_CheckedChanged);
             // 
@@ -160,37 +160,26 @@
             this.enableFilenameProcessing.AutoSize = true;
             this.enableFilenameProcessing.Location = new System.Drawing.Point(3, 46);
             this.enableFilenameProcessing.Name = "enableFilenameProcessing";
-            this.enableFilenameProcessing.Size = new System.Drawing.Size(120, 17);
+            this.enableFilenameProcessing.Size = new System.Drawing.Size(114, 17);
             this.enableFilenameProcessing.TabIndex = 16;
-            this.enableFilenameProcessing.Text = "Process Filenames?";
+            this.enableFilenameProcessing.Text = "Process Filenames";
             this.enableFilenameProcessing.UseVisualStyleBackColor = true;
             this.enableFilenameProcessing.CheckedChanged += new System.EventHandler(this.enableFilenameProcessing_CheckedChanged);
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.panel4);
             this.flowLayoutPanel1.Controls.Add(this.panel2);
+            this.flowLayoutPanel1.Controls.Add(this.panel4);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 114);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(479, 121);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.enableFolderVariableRemoval);
-            this.panel2.Controls.Add(this.enableFilenameVariableRemoval);
-            this.panel2.Controls.Add(this.enableFilenameProcessing);
-            this.panel2.Location = new System.Drawing.Point(341, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(0, 17, 0, 0);
-            this.panel2.Size = new System.Drawing.Size(132, 113);
-            this.panel2.TabIndex = 18;
-            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.panel3);
             this.panel4.Controls.Add(this.panel1);
-            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Location = new System.Drawing.Point(141, 3);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(332, 113);
             this.panel4.TabIndex = 18;
@@ -272,6 +261,17 @@
             this.variableRemovalHeader.TabIndex = 7;
             this.variableRemovalHeader.Text = "Clean Folder Text:";
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.enableFolderVariableRemoval);
+            this.panel2.Controls.Add(this.enableFilenameVariableRemoval);
+            this.panel2.Controls.Add(this.enableFilenameProcessing);
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(0, 17, 0, 0);
+            this.panel2.Size = new System.Drawing.Size(132, 113);
+            this.panel2.TabIndex = 18;
+            // 
             // PeriodKiller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,13 +293,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Period Killer";
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\FolderCleaner.cs" />
+    <Compile Include="Class\Messages.cs" />
     <Compile Include="Controls\PeriodKiller.cs">
       <SubType>Form</SubType>
     </Compile>

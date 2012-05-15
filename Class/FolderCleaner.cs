@@ -9,13 +9,13 @@ namespace PeriodKiller
     {
         private int numPeriods = 0;
         private int numRenames = 0;
-        private List<String> duplicates = new List<String>();
+        private List<string> duplicates = new List<string>();
 
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
             //Start removing the periods from folder names
             string[] newdirectories = Directory.GetDirectories(selectedFolder.SelectedPath);
-            foreach (String directory in newdirectories)
+            foreach (string directory in newdirectories)
             {
                 if (directory.Contains("."))
                 {
@@ -41,20 +41,20 @@ namespace PeriodKiller
         }
 
         //TODO check if a period is in this field. If so, filter it
-        public void removeText(FolderBrowserDialog selectedFolder, String variable)
+        public void removeText(FolderBrowserDialog selectedFolder, string variable)
         {
-            String[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
-            foreach (String directoryName in directories)
+            string[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
+            foreach (string directoryName in directories)
             {
                 //Get the parent of each directory and the actual directory name that we'll be working with
                 DirectoryInfo directoryParent = Directory.GetParent(directoryName);
-                String directory = directoryName.Substring(directoryName.LastIndexOf("\\") + 1);
+                string directory = directoryName.Substring(directoryName.LastIndexOf("\\") + 1);
 
                 if (directoryName.ToLower().Contains(variable.ToLower()))
                 {
                     //If there's an occurance of the string in the directory name, convert the string and directory name to lowercase
-                    String lowerDirectoryName = directoryName.ToLower();
-                    String lowerVariableRemoval = variable.ToLower();
+                    string lowerDirectoryName = directoryName.ToLower();
+                    string lowerVariableRemoval = variable.ToLower();
 
                     //Make sure we're not removing the entire folder name!
                     if (directory.LastIndexOf(variable) >= 0 && directory.Substring(0, directory.LastIndexOf(variable)) != "")
@@ -81,26 +81,28 @@ namespace PeriodKiller
             }
         }
 
-        public int numPeriodRemovals()
+        public int PeriodRemovals
         {
-            return numPeriods;
+            get
+            {
+                return numPeriods;
+            }
         }
 
-        public int numFolderRenames()
+        public int FolderRenames
         {
-            return this.numRenames;
+            get
+            {
+                return numRenames;
+            }
         }
 
-        public List<String> getDuplicates()
+        public List<string> Duplicates
         {
-            return duplicates;
-        }
-
-        //TODO after the operation has been performed on a folder, reset the counts
-        public void resetCounts()
-        {
-            numPeriods = 0;
-            numRenames = 0;
+            get
+            {
+                return duplicates;
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace PeriodKiller
     public partial class PeriodKiller : Form
     {
         private FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-        private FolderCleaner fCleaner = new FolderCleaner();
+        private FolderCleaner folderCleaner;
 
         public PeriodKiller()
         {
@@ -32,6 +32,7 @@ namespace PeriodKiller
             //Has the user selected a folder yet?
             if (folderDialog.SelectedPath != "")
             {
+                 folderCleaner = new FolderCleaner();
                 //Make sure that the directory we're working with hasn't been deleted outside of the program after selecting it
                 if (!Directory.Exists(folderDialog.SelectedPath))
                 {
@@ -45,43 +46,20 @@ namespace PeriodKiller
                 if (folderVariableRemoval.Text != "")
                 {
                     //Remove a string from each folder
-                    fCleaner.removeText(folderDialog, folderVariableRemoval.Text);
+                    folderCleaner.removeText(folderDialog, folderVariableRemoval.Text);
                 }
                 
                 //Just remove the periods
-                fCleaner.removePeriods(folderDialog);
+                folderCleaner.removePeriods(folderDialog);
 
-                if (fCleaner.getDuplicates().Count > 0)
+                if (folderCleaner.Duplicates.Count > 0)
                 {
                     duplicatesLabel.Enabled = true;
-                    duplicatesLabel.Text = fCleaner.getDuplicates().Count + " collision(s) found when restructuring folders. Click here to view them.";
+                    duplicatesLabel.Text = folderCleaner.Duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
                 }
-
-                //Notifications/error messages
-                //TODO consolidate this section a bit more. Maybe store messages in some kind of data structure for better organization/consistency?
-                if (fCleaner.numPeriodRemovals() == 0)
-                {
-                    if (fCleaner.numFolderRenames() == 0)
-                    {
-                        MessageBox.Show("There were no folders with periods replaced or that had variable removals");
-                    }
-                    else
-                    {
-                        MessageBox.Show("There were no periods to be replaced but there were " + fCleaner.numFolderRenames() + " variable removals performed");
-                    }
-                    
-                }
-                else
-                {
-                    if (fCleaner.numFolderRenames() == 0)
-                    {
-                        MessageBox.Show(fCleaner.numPeriodRemovals().ToString() + " folders had their periods successfully replaced with spaces.");
-                    }
-                    else
-                    {
-                        MessageBox.Show(fCleaner.numPeriodRemovals().ToString() + " folders had their periods successfully replaced with spaces and " + fCleaner.numFolderRenames() + " variable removals were performed");
-                    }
-                }
+                //Display message about processed folders/files
+                Messages cleanerMessages = new Messages(folderCleaner.PeriodRemovals, folderCleaner.FolderRenames);
+                MessageBox.Show(cleanerMessages.getProcessedMessage());
             }
             else
             {
@@ -95,7 +73,7 @@ namespace PeriodKiller
             //TODO allow duplicate resolution here. Create options for each duplicate
             Collisions duplicatesForm = new Collisions();
             duplicatesForm.Owner = this;
-            foreach (String folder in fCleaner.getDuplicates())
+            foreach (string folder in folderCleaner.Duplicates)
             {
                 duplicatesForm.addItem = folder;
             }
