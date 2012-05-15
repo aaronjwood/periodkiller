@@ -40,7 +40,6 @@ namespace PeriodKiller
             }
         }
 
-        //TODO check if a period is in this field. If so, filter it
         public void removeText(FolderBrowserDialog selectedFolder, string variable)
         {
             string[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);

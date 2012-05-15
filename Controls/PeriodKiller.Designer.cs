@@ -40,6 +40,7 @@
             this.enableFilenameVariableRemoval = new System.Windows.Forms.CheckBox();
             this.enableFilenameProcessing = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.cleanFilenamesHeader = new System.Windows.Forms.Label();
@@ -49,12 +50,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.folderVariableRemoval = new System.Windows.Forms.TextBox();
             this.variableRemovalHeader = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // selectFolder
@@ -116,12 +116,12 @@
             // duplicatesLabel
             // 
             this.duplicatesLabel.AutoSize = true;
-            this.duplicatesLabel.Enabled = false;
             this.duplicatesLabel.LinkColor = System.Drawing.Color.Yellow;
-            this.duplicatesLabel.Location = new System.Drawing.Point(0, 168);
+            this.duplicatesLabel.Location = new System.Drawing.Point(12, 268);
             this.duplicatesLabel.Name = "duplicatesLabel";
             this.duplicatesLabel.Size = new System.Drawing.Size(0, 13);
             this.duplicatesLabel.TabIndex = 9;
+            this.duplicatesLabel.Visible = false;
             this.duplicatesLabel.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             // 
             // selectFolderLbl
@@ -174,6 +174,17 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(479, 121);
             this.flowLayoutPanel1.TabIndex = 17;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.enableFolderVariableRemoval);
+            this.panel2.Controls.Add(this.enableFilenameVariableRemoval);
+            this.panel2.Controls.Add(this.enableFilenameProcessing);
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(0, 17, 0, 0);
+            this.panel2.Size = new System.Drawing.Size(132, 113);
+            this.panel2.TabIndex = 18;
             // 
             // panel4
             // 
@@ -261,17 +272,6 @@
             this.variableRemovalHeader.TabIndex = 7;
             this.variableRemovalHeader.Text = "Clean Folder Text:";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.enableFolderVariableRemoval);
-            this.panel2.Controls.Add(this.enableFilenameVariableRemoval);
-            this.panel2.Controls.Add(this.enableFilenameProcessing);
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(0, 17, 0, 0);
-            this.panel2.Size = new System.Drawing.Size(132, 113);
-            this.panel2.TabIndex = 18;
-            // 
             // PeriodKiller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,13 +293,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Period Killer";
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

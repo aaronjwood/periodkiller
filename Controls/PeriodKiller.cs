@@ -27,12 +27,13 @@ namespace PeriodKiller
         }
 
         private void fixFolders_Click(object sender, EventArgs e)
-        {   
+        {
+            duplicatesLabel.Hide();
             //Has the user selected a folder yet?
             if (folderDialog.SelectedPath != "")
             {
                  folderCleaner = new FolderCleaner();
-                //Make sure that the directory we're working with hasn't been deleted outside of the program after selecting it
+                //Make sure that the directory hasn't been deleted outside of the program
                 if (!Directory.Exists(folderDialog.SelectedPath))
                 {
                     duplicatesLabel.Text = "";
@@ -42,6 +43,7 @@ namespace PeriodKiller
                 }
                 selectFolderLbl.Text = "";
 
+                //TODO make sure the checkbox to remove text is also checked
                 if (folderVariableRemoval.Text != "")
                 {
                     //Remove a string from each folder
@@ -53,7 +55,7 @@ namespace PeriodKiller
 
                 if (folderCleaner.Duplicates.Count > 0)
                 {
-                    duplicatesLabel.Enabled = true;
+                    duplicatesLabel.Show();
                     duplicatesLabel.Text = folderCleaner.Duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
                 }
                 //Display message about processed folders/files
