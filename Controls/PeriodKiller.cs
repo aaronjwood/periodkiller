@@ -21,13 +21,15 @@ namespace PeriodKiller
             //When a folder is selected, set the path in the appropriate label
             if (folderDialog.ShowDialog() == DialogResult.OK)
             {
-                pathLbl.Text = folderDialog.SelectedPath;
+                folderPathLabel.Text = folderDialog.SelectedPath;
                 selectFolderLbl.Text = "";
             }
         }
 
         private void fixFolders_Click(object sender, EventArgs e)
         {
+            //TODO implement removing periods from filename
+
             duplicatesLabel.Hide();
             //Has the user selected a folder yet?
             if (folderDialog.SelectedPath != "")
@@ -38,13 +40,12 @@ namespace PeriodKiller
                 {
                     duplicatesLabel.Text = "";
                     selectFolderLbl.Text = "Folder no longer exists!";
-                    pathLbl.Text = "";
+                    folderPathLabel.Text = "";
                     return;
                 }
                 selectFolderLbl.Text = "";
 
-                //TODO make sure the checkbox to remove text is also checked
-                if (folderVariableRemoval.Text != "")
+                if (enableFolderVariableRemoval.Checked && folderVariableRemoval.Text != "")
                 {
                     //Remove a string from each folder
                     folderCleaner.removeText(folderDialog, folderVariableRemoval.Text);
@@ -91,22 +92,21 @@ namespace PeriodKiller
             {
                 fixFolders.Text = "Clean Folder Names";
             }
-            //TODO implement removing periods from filename
         }
 
         private void enableFolderVariableRemoval_CheckedChanged(object sender, EventArgs e)
         {
             if (enableFolderVariableRemoval.Checked)
             {
-                panel1.Visible = true;
-                panel4.Visible = true;
+                cleanFolderTextPanel.Visible = true;
+                cleanTextPanel.Visible = true;
             }
             else
             {
-                panel1.Visible = false;
-                if (panel3.Visible == false)
+                cleanFolderTextPanel.Visible = false;
+                if (cleanFilenameTextPanel.Visible == false)
                 {
-                    panel4.Visible = false;
+                    cleanTextPanel.Visible = false;
                 }
             }
         }
@@ -115,15 +115,15 @@ namespace PeriodKiller
         {
             if (enableFilenameVariableRemoval.Checked)
             {
-                panel3.Visible = true;
-                panel4.Visible = true;
+                cleanFilenameTextPanel.Visible = true;
+                cleanTextPanel.Visible = true;
             }
             else
             {
-                panel3.Visible = false;
-                if (panel1.Visible == false)
+                cleanFilenameTextPanel.Visible = false;
+                if (cleanFolderTextPanel.Visible == false)
                 {
-                    panel4.Visible = false;
+                    cleanTextPanel.Visible = false;
                 }
             }
         }
