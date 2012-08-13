@@ -14,27 +14,20 @@ namespace PeriodKiller
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
             //Start removing the periods from folder names
-            string[] newdirectories = Directory.GetDirectories(selectedFolder.SelectedPath);
-            foreach (string directory in newdirectories)
+            string[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
+            foreach (string directory in directories)
             {
                 if (directory.Contains("."))
                 {
-                    try
+                    string destinationDirectory = directory.Replace(".", " ");
+                    if (!Directory.Exists(destinationDirectory))
                     {
-                        //Remove period and increment the count of number of periods replaced
+                        Directory.Move(directory, destinationDirectory);
                         numPeriods++;
-                        Directory.Move(directory, directory.Replace(".", " "));
                     }
-                    catch (IOException)
+                    else
                     {
-                        //TODO more checks are needed here
-                        //TODO handle duplicates (prompt to overwrite, merge, etc.?)
-                        //We encountered a duplicate
-                        numPeriods--;
-                        if (!duplicates.Contains(directory))
-                        {
-                            duplicates.Add(directory);
-                        }
+                        duplicates.Add(directory);
                     }
                 }
             }
@@ -46,34 +39,33 @@ namespace PeriodKiller
             foreach (string directoryName in directories)
             {
                 //Get the parent of each directory and the actual directory name that we'll be working with
-                DirectoryInfo directoryParent = Directory.GetParent(directoryName);
+                string directoryParent = Directory.GetParent(directoryName).FullName;
                 string directory = directoryName.Substring(directoryName.LastIndexOf("\\") + 1);
 
-                if (directoryName.ToLower().Contains(variable.ToLower()))
-                {
-                    //If there's an occurance of the string in the directory name, convert the string and directory name to lowercase
-                    string lowerDirectoryName = directoryName.ToLower();
-                    string lowerVariableRemoval = variable.ToLower();
+                //Convert the directory name and the variable to lowercase to ignore case
+                string lowerDirectory = directory.ToLower();
+                string lowerVariable = variable.ToLower();
 
+                if (lowerDirectory.Contains(lowerVariable))
+                {
                     //Make sure we're not removing the entire folder name!
-                    if (directory.LastIndexOf(variable) >= 0 && directory.Substring(0, directory.LastIndexOf(variable)) != "")
+                    if (lowerDirectory.IndexOf(lowerVariable) >= 0 && lowerDirectory.Substring(0, lowerDirectory.IndexOf(lowerVariable)) != "")
                     {
-                        try
+                        //Get the index based on the lowercase versions at which to start removing text
+                        int idx = lowerDirectory.IndexOf(lowerVariable);
+                        string sourceDirectory = directoryParent + "\\" + directory;
+                        string destinationDirectory = directoryParent + "\\" + directory.Substring(0, idx);
+                            
+                        //Does the directory already exist?
+                        if (!Directory.Exists(destinationDirectory))
                         {
                             //Perform the rename with the variable removal and increment the number of directory renames
+                            Directory.Move(sourceDirectory, destinationDirectory);
                             numRenames++;
-                            Directory.Move(directoryParent + "\\" + directory, directoryParent + "\\" + directory.Substring(0, directory.LastIndexOf(variable)));
                         }
-                        catch (IOException)
+                        else
                         {
-                            //TODO handle duplicates (prompt to overwrite, merge, etc.?)
-                            //TODO more checks are needed here
-                            //The renaming process produced duplicates
-                            numRenames--;
-                            if (!duplicates.Contains(directoryName))
-                            {
-                                duplicates.Add(directoryName);
-                            }
+                            duplicates.Add(directoryName);
                         }
                     }
                 }

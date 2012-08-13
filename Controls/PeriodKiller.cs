@@ -23,6 +23,8 @@ namespace PeriodKiller
             {
                 folderPathLabel.Text = folderDialog.SelectedPath;
                 selectFolderLbl.Text = "";
+                mainContainer.Visible = true;
+                fixFolders.Visible = true;
             }
         }
 
@@ -41,18 +43,20 @@ namespace PeriodKiller
                     duplicatesLabel.Text = "";
                     selectFolderLbl.Text = "Folder no longer exists!";
                     folderPathLabel.Text = "";
+                    mainContainer.Visible = false;
+                    fixFolders.Visible = false;
                     return;
                 }
                 selectFolderLbl.Text = "";
+
+                //Remove the periods
+                folderCleaner.removePeriods(folderDialog);
 
                 if (enableFolderVariableRemoval.Checked && folderVariableRemoval.Text != "")
                 {
                     //Remove a string from each folder
                     folderCleaner.removeText(folderDialog, folderVariableRemoval.Text);
                 }
-                
-                //Just remove the periods
-                folderCleaner.removePeriods(folderDialog);
 
                 if (folderCleaner.Duplicates.Count > 0)
                 {

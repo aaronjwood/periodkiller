@@ -80,7 +80,7 @@
             this.folderPathLabel.AutoEllipsis = true;
             this.folderPathLabel.AutoSize = true;
             this.folderPathLabel.ForeColor = System.Drawing.Color.Orange;
-            this.folderPathLabel.Location = new System.Drawing.Point(12, 82);
+            this.folderPathLabel.Location = new System.Drawing.Point(13, 82);
             this.folderPathLabel.Name = "folderPathLabel";
             this.folderPathLabel.Size = new System.Drawing.Size(0, 13);
             this.folderPathLabel.TabIndex = 1;
@@ -100,6 +100,7 @@
             this.fixFolders.TabIndex = 2;
             this.fixFolders.Text = "Clean Folder Names";
             this.fixFolders.UseVisualStyleBackColor = false;
+            this.fixFolders.Visible = false;
             this.fixFolders.Click += new System.EventHandler(this.fixFolders_Click);
             // 
             // programName
@@ -174,6 +175,7 @@
             this.mainContainer.Name = "mainContainer";
             this.mainContainer.Size = new System.Drawing.Size(479, 121);
             this.mainContainer.TabIndex = 17;
+            this.mainContainer.Visible = false;
             // 
             // optionsPanel
             // 
