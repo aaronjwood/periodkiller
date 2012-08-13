@@ -59,9 +59,16 @@ namespace PeriodKiller
                         //Does the directory already exist?
                         if (!Directory.Exists(destinationDirectory))
                         {
-                            //Perform the rename with the variable removal and increment the number of directory renames
-                            Directory.Move(sourceDirectory, destinationDirectory);
-                            numRenames++;
+                            try
+                            {
+                                //Perform the directory rename and increment the count of the number of directory renames
+                                Directory.Move(sourceDirectory, destinationDirectory);
+                                numRenames++;
+                            }
+                            catch (IOException e)
+                            {
+                                MessageBox.Show(e.Message);
+                            }
                         }
                         else
                         {
