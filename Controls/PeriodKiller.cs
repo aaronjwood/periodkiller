@@ -36,7 +36,7 @@ namespace PeriodKiller
             //Has the user selected a folder yet?
             if (folderDialog.SelectedPath != "")
             {
-                 folderCleaner = new FolderCleaner();
+                folderCleaner = new FolderCleaner();
                 //Make sure that the directory hasn't been deleted outside of the program
                 if (!Directory.Exists(folderDialog.SelectedPath))
                 {
@@ -56,6 +56,12 @@ namespace PeriodKiller
                 {
                     //Remove a string from each folder
                     folderCleaner.removeText(folderDialog, folderVariableRemoval.Text);
+                }
+
+                if (enableFilenameProcessing.Checked)
+                {
+                    FilenameCleaner filenameCleaner = new FilenameCleaner();
+                    filenameCleaner.removePeriods(folderDialog);
                 }
 
                 if (folderCleaner.Duplicates.Count > 0)

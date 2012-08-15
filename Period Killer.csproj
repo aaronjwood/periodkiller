@@ -128,7 +128,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\FileCleaner.cs" />
+    <Compile Include="Class\FilenameCleaner.cs" />
     <Compile Include="Class\FolderCleaner.cs" />
     <Compile Include="Class\Messages.cs" />
     <Compile Include="Controls\PeriodKiller.cs">
