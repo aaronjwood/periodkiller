@@ -33,9 +33,15 @@ namespace PeriodKiller
             string[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
             foreach (string directory in directories)
             {
-                if (directory.Contains("."))
+                string currentDirectory = new DirectoryInfo(directory).Name;
+
+                if (currentDirectory.Contains("."))
                 {
-                    string destinationDirectory = directory.Replace(".", " ");
+                    //Build the absolute path with the modified directory name
+                    string parentDirectory = Path.GetDirectoryName(directory);
+                    string destinationDirectory = currentDirectory.Replace(".", " ");
+                    destinationDirectory = Path.Combine(parentDirectory, destinationDirectory);
+
                     if (!Directory.Exists(destinationDirectory))
                     {
                         try

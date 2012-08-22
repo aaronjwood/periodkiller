@@ -36,14 +36,15 @@ namespace PeriodKiller
             {
                 //Get the filename without the extension, the parent directory, and the extension of the filename we're working with
                 string filename = Path.GetFileNameWithoutExtension(file);
-                string parentDirectory = Path.GetDirectoryName(file) + "\\";
-                string extension = Path.GetExtension(file);
+                
                 if (filename.Contains("."))
                 {
                     //Build the absolute path with the modified filename
+                    string parentDirectory = Path.GetDirectoryName(file);
                     string destinationFile = filename.Replace(".", " ");
-                    destinationFile = parentDirectory + destinationFile + extension;
-
+                    string extension = Path.GetExtension(file);
+                    destinationFile = Path.Combine(parentDirectory, destinationFile+extension);
+                    
                     //Does the file already exist?
                     if (!File.Exists(destinationFile))
                     {

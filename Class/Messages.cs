@@ -5,7 +5,6 @@
         int folderPeriodRemovals;
         int folderRenames;
         int filePeriodRemovals;
-        string message;
 
         public Messages(int folderPeriodRemovals, int folderRenames, int filePeriodRemovals)
         {
@@ -16,20 +15,33 @@
 
         public string getProcessedCounts()
         {
+            string message = null;
             if (this.folderPeriodRemovals != 0)
             {
-                this.message += "Number of periods removed from folders: " + this.folderPeriodRemovals + "\n";
+                message += "Number of periods removed from folders: " + this.folderPeriodRemovals + "\n";
             }
             if (this.folderRenames != 0)
             {
-                this.message += "Number of folders renamed: " + this.folderRenames + "\n";
+                message += "Number of folders renamed: " + this.folderRenames + "\n";
             }
             if (this.filePeriodRemovals != 0)
             {
-                this.message += "Number of periods removed from files: " + this.filePeriodRemovals + "\n";
+                message += "Number of periods removed from files: " + this.filePeriodRemovals + "\n";
             }
 
-            return this.message;
+            return message;
+        }
+
+        public bool hasMessage()
+        {
+            if (this.folderPeriodRemovals != 0 || this.folderRenames != 0 || this.filePeriodRemovals != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

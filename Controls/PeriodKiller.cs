@@ -75,9 +75,10 @@ namespace PeriodKiller
                     duplicatesLabel.Show();
                     duplicatesLabel.Text = folderCleaner.Duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
                 }
+
                 //Display message about processed folders/files
                 Messages cleanerMessages = new Messages(folderCleaner.numPeriods, folderCleaner.numRenames, filenameCleaner.numPeriods);
-                if (cleanerMessages.getProcessedCounts() != null)
+                if (cleanerMessages.hasMessage())
                 {
                     MessageBox.Show(cleanerMessages.getProcessedCounts());
                 }
