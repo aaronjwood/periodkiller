@@ -1,42 +1,35 @@
-﻿using System.Windows.Forms;
-
-namespace PeriodKiller
+﻿namespace PeriodKiller
 {
     class Messages
     {
-        int periodRemovals;
+        int folderPeriodRemovals;
         int folderRenames;
+        int filePeriodRemovals;
+        string message;
 
-        public Messages(int periodRemovals, int folderRenames)
+        public Messages(int folderPeriodRemovals, int folderRenames, int filePeriodRemovals)
         {
-            this.periodRemovals = periodRemovals;
+            this.folderPeriodRemovals = folderPeriodRemovals;
             this.folderRenames = folderRenames;
+            this.filePeriodRemovals = filePeriodRemovals;
         }
 
-        public string getProcessedMessage()
+        public string getProcessedCounts()
         {
-            if (periodRemovals == 0)
+            if (this.folderPeriodRemovals != 0)
             {
-                if (folderRenames == 0)
-                {
-                    return "There were no folders with periods replaced or that had variable removals";
-                }
-                else
-                {
-                    return "There were no periods to be replaced but there were " + folderRenames + " variable removals performed";
-                }
+                this.message += "Number of periods removed from folders: " + this.folderPeriodRemovals + "\n";
             }
-            else
+            if (this.folderRenames != 0)
             {
-                if(folderRenames == 0)
-                {
-                    return periodRemovals + " folders had their periods successfully replaced with spaces";
-                }
-                else
-                {
-                    return periodRemovals + " folders had their periods successfully replaced with spaces and " + folderRenames + " variable removals were performed";
-                }
+                this.message += "Number of folders renamed: " + this.folderRenames + "\n";
             }
+            if (this.filePeriodRemovals != 0)
+            {
+                this.message += "Number of periods removed from files: " + this.filePeriodRemovals + "\n";
+            }
+
+            return this.message;
         }
     }
 }

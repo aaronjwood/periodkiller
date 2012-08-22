@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,9 +6,26 @@ namespace PeriodKiller
 {
     class FolderCleaner
     {
-        private int numPeriods = 0;
-        private int numRenames = 0;
+        public int numPeriods
+        {
+            get;
+            set;
+        }
+
+        public int numRenames
+        {
+            get;
+            set;
+        }
         private List<string> duplicates = new List<string>();
+
+        public List<string> Duplicates
+        {
+            get
+            {
+                return this.duplicates;
+            }
+        }
 
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
@@ -22,12 +38,19 @@ namespace PeriodKiller
                     string destinationDirectory = directory.Replace(".", " ");
                     if (!Directory.Exists(destinationDirectory))
                     {
-                        Directory.Move(directory, destinationDirectory);
-                        numPeriods++;
+                        try
+                        {
+                            Directory.Move(directory, destinationDirectory);
+                            this.numPeriods++;
+                        }
+                        catch (IOException e)
+                        {
+                            MessageBox.Show(e.Message);
+                        }
                     }
                     else
                     {
-                        duplicates.Add(directory);
+                        this.duplicates.Add(directory);
                     }
                 }
             }
@@ -55,15 +78,14 @@ namespace PeriodKiller
                         int idx = lowerDirectory.IndexOf(lowerVariable);
                         string sourceDirectory = directoryParent + "\\" + directory;
                         string destinationDirectory = directoryParent + "\\" + directory.Substring(0, idx);
-                            
+
                         //Does the directory already exist?
                         if (!Directory.Exists(destinationDirectory))
                         {
                             try
                             {
-                                //Perform the directory rename and increment the count of the number of directory renames
                                 Directory.Move(sourceDirectory, destinationDirectory);
-                                numRenames++;
+                                this.numRenames++;
                             }
                             catch (IOException e)
                             {
@@ -72,35 +94,18 @@ namespace PeriodKiller
                         }
                         else
                         {
-                            duplicates.Add(directoryName);
+                            this.duplicates.Add(directoryName);
                         }
                     }
                 }
             }
         }
 
-        public int PeriodRemovals
+        public void resetCounts()
         {
-            get
-            {
-                return numPeriods;
-            }
-        }
-
-        public int FolderRenames
-        {
-            get
-            {
-                return numRenames;
-            }
-        }
-
-        public List<string> Duplicates
-        {
-            get
-            {
-                return duplicates;
-            }
+            this.numPeriods = 0;
+            this.numRenames = 0;
+            this.duplicates.Clear();
         }
     }
 }

@@ -7,7 +7,9 @@ namespace PeriodKiller
     public partial class PeriodKiller : Form
     {
         private FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-        private FolderCleaner folderCleaner;
+        private FolderCleaner folderCleaner = new FolderCleaner();
+        private FilenameCleaner filenameCleaner = new FilenameCleaner();
+        private string selectedPath;
 
         public PeriodKiller()
         {
@@ -21,7 +23,8 @@ namespace PeriodKiller
             //When a folder is selected, set the path in the appropriate label
             if (folderDialog.ShowDialog() == DialogResult.OK)
             {
-                folderPathLabel.Text = folderDialog.SelectedPath;
+                this.selectedPath = folderDialog.SelectedPath;
+                folderPathLabel.Text = this.selectedPath;
                 selectFolderLbl.Text = "";
                 mainContainer.Visible = true;
                 fixFolders.Visible = true;
@@ -30,48 +33,54 @@ namespace PeriodKiller
 
         private void fixFolders_Click(object sender, EventArgs e)
         {
-            //TODO implement removing periods from filename
-
             duplicatesLabel.Hide();
             //Has the user selected a folder yet?
-            if (folderDialog.SelectedPath != "")
+            if (this.selectedPath!= "")
             {
-                folderCleaner = new FolderCleaner();
                 //Make sure that the directory hasn't been deleted outside of the program
-                if (!Directory.Exists(folderDialog.SelectedPath))
+                if (!Directory.Exists(this.selectedPath))
                 {
                     duplicatesLabel.Text = "";
                     selectFolderLbl.Text = "Folder no longer exists!";
-                    folderPathLabel.Text = "";
+                    this.selectedPath = null;
+                    folderPathLabel.Text = this.selectedPath;
                     mainContainer.Visible = false;
                     fixFolders.Visible = false;
                     return;
                 }
                 selectFolderLbl.Text = "";
 
+                //Reset counts from previous run (if any)
+                folderCleaner.resetCounts();
+                filenameCleaner.resetCounts();
+
                 //Remove the periods
                 folderCleaner.removePeriods(folderDialog);
 
+                //Remove a string from each folder if option is checked and the text box isn't empty
                 if (enableFolderVariableRemoval.Checked && folderVariableRemoval.Text != "")
                 {
-                    //Remove a string from each folder
                     folderCleaner.removeText(folderDialog, folderVariableRemoval.Text);
                 }
 
+                //Remove periods from filename if option is checked
                 if (enableFilenameProcessing.Checked)
                 {
-                    FilenameCleaner filenameCleaner = new FilenameCleaner();
                     filenameCleaner.removePeriods(folderDialog);
                 }
 
+                //If there are duplicates 
                 if (folderCleaner.Duplicates.Count > 0)
                 {
                     duplicatesLabel.Show();
                     duplicatesLabel.Text = folderCleaner.Duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
                 }
                 //Display message about processed folders/files
-                Messages cleanerMessages = new Messages(folderCleaner.PeriodRemovals, folderCleaner.FolderRenames);
-                MessageBox.Show(cleanerMessages.getProcessedMessage());
+                Messages cleanerMessages = new Messages(folderCleaner.numPeriods, folderCleaner.numRenames, filenameCleaner.numPeriods);
+                if (cleanerMessages.getProcessedCounts() != null)
+                {
+                    MessageBox.Show(cleanerMessages.getProcessedCounts());
+                }
             }
             else
             {
