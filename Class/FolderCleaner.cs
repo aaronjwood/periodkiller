@@ -83,8 +83,8 @@ namespace PeriodKiller
                     {
                         //Get the index based on the lowercase versions at which to start removing text
                         int idx = lowerDirectory.IndexOf(lowerVariable);
-                        string sourceDirectory = directoryParent + "\\" + directory;
-                        string destinationDirectory = directoryParent + "\\" + directory.Substring(0, idx);
+                        string sourceDirectory = Path.Combine(directoryParent, directory);
+                        string destinationDirectory = Path.Combine(directoryParent, directory.Substring(0, idx));
 
                         //Does the directory already exist?
                         if (!Directory.Exists(destinationDirectory))
