@@ -2,39 +2,40 @@
 {
     class Messages
     {
-        int folderPeriodRemovals;
-        int folderRenames;
-        int filePeriodRemovals;
+        private int folderPeriodRemovals;
+        private int folderRenames;
+        private int filePeriodRemovals;
+        private string message;
 
         public Messages(int folderPeriodRemovals, int folderRenames, int filePeriodRemovals)
         {
             this.folderPeriodRemovals = folderPeriodRemovals;
             this.folderRenames = folderRenames;
             this.filePeriodRemovals = filePeriodRemovals;
+            this.generateMessage();
         }
 
-        public string getProcessedCounts()
+        private void generateMessage()
         {
-            string message = null;
+            string generatedMessage = null;
             if (this.folderPeriodRemovals != 0)
             {
-                message += "Number of periods removed from folders: " + this.folderPeriodRemovals + "\n";
+                generatedMessage += "Number of periods removed from folders: " + this.folderPeriodRemovals + "\n";
             }
             if (this.folderRenames != 0)
             {
-                message += "Number of folders renamed: " + this.folderRenames + "\n";
+                generatedMessage += "Number of folders renamed: " + this.folderRenames + "\n";
             }
             if (this.filePeriodRemovals != 0)
             {
-                message += "Number of periods removed from files: " + this.filePeriodRemovals + "\n";
+                generatedMessage += "Number of periods removed from files: " + this.filePeriodRemovals + "\n";
             }
-
-            return message;
+            this.message = generatedMessage;
         }
 
         public bool hasMessage()
         {
-            if (this.folderPeriodRemovals != 0 || this.folderRenames != 0 || this.filePeriodRemovals != 0)
+            if (this.message != null)
             {
                 return true;
             }
@@ -42,6 +43,11 @@
             {
                 return false;
             }
+        }
+
+        public string getMessage()
+        {
+            return this.message;
         }
     }
 }

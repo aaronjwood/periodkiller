@@ -80,7 +80,7 @@ namespace PeriodKiller
                 Messages cleanerMessages = new Messages(folderCleaner.numPeriods, folderCleaner.numRenames, filenameCleaner.numPeriods);
                 if (cleanerMessages.hasMessage())
                 {
-                    MessageBox.Show(cleanerMessages.getProcessedCounts());
+                    MessageBox.Show(cleanerMessages.getMessage());
                 }
             }
             else

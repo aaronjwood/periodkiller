@@ -157,6 +157,7 @@
       <DependentUpon>Collisions.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\Program.cs" />
+    <Compile Include="Interface\ICleaner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\PeriodKiller.resx">
       <DependentUpon>PeriodKiller.cs</DependentUpon>

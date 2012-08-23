@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using PeriodKiller.Interface;
 
 namespace PeriodKiller
 {
-    class FolderCleaner
+    class FolderCleaner : ICleaner
     {
         public int numPeriods
         {

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using PeriodKiller.Interface;
 
 namespace PeriodKiller
 {
-    class FilenameCleaner
+    class FilenameCleaner : ICleaner
     {
         public int numPeriods
         {
@@ -64,6 +65,11 @@ namespace PeriodKiller
                     }
                 }
             }
+        }
+
+        public void removeText(FolderBrowserDialog selectedFolder, string variable)
+        {
+
         }
 
         //TODO handle removing text from filenames
