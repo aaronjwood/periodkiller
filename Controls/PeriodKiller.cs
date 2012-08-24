@@ -10,6 +10,8 @@ namespace PeriodKiller
         private FolderCleaner folderCleaner = new FolderCleaner();
         private FilenameCleaner filenameCleaner = new FilenameCleaner();
         private string selectedPath;
+        private bool filenameProcessingEnabled = false;
+        private bool filenameVariableRemovalEnabled = false;
 
         public PeriodKiller()
         {
@@ -54,30 +56,36 @@ namespace PeriodKiller
                 folderCleaner.resetCounts();
                 filenameCleaner.resetCounts();
 
-                //Remove the periods
-                folderCleaner.removePeriods(folderDialog);
-
-                //Remove a string from each folder if option is checked and the text box isn't empty
+                //Remove a string from each directory if option is checked and the text box isn't empty (do this first)
                 if (enableFolderVariableRemoval.Checked && folderVariableRemoval.Text != "")
                 {
                     folderCleaner.removeText(folderDialog, folderVariableRemoval.Text);
                 }
 
-                //Remove periods from filename if option is checked
+                //Remove periods from directory names
+                folderCleaner.removePeriods(folderDialog);
+
+                //Remove a string from each file if option is checked and the text box isn't empty (do this first)
+                if (enableFilenameVariableRemoval.Checked && filenameVariableRemoval.Text != "")
+                {
+                    filenameCleaner.removeText(folderDialog, filenameVariableRemoval.Text);
+                }
+
+                //Remove periods from filenames
                 if (enableFilenameProcessing.Checked)
                 {
                     filenameCleaner.removePeriods(folderDialog);
                 }
 
                 //If there are duplicates 
-                if (folderCleaner.Duplicates.Count > 0)
+                if (folderCleaner.Duplicates.Count > 0 || filenameCleaner.Duplicates.Count > 0)
                 {
                     duplicatesLabel.Show();
-                    duplicatesLabel.Text = folderCleaner.Duplicates.Count + " collision(s) found when restructuring folders. Click here to view them.";
+                    duplicatesLabel.Text = (folderCleaner.Duplicates.Count + filenameCleaner.Duplicates.Count) + " collision(s) found when restructuring folders. Click here to view them.";
                 }
 
                 //Display message about processed folders/files
-                Messages cleanerMessages = new Messages(folderCleaner.numPeriods, folderCleaner.numRenames, filenameCleaner.numPeriods);
+                Messages cleanerMessages = new Messages(folderCleaner.numPeriods, folderCleaner.numRenames, filenameCleaner.numPeriods, filenameCleaner.numRenames);
                 if (cleanerMessages.hasMessage())
                 {
                     MessageBox.Show(cleanerMessages.getMessage());
@@ -95,9 +103,13 @@ namespace PeriodKiller
             //TODO allow duplicate resolution here. Create options for each duplicate
             Collisions duplicatesForm = new Collisions();
             duplicatesForm.Owner = this;
-            foreach (string folder in folderCleaner.Duplicates)
+            foreach (string[] folder in folderCleaner.Duplicates)
             {
-                duplicatesForm.addItem = folder;
+                duplicatesForm.addItem(folder);
+            }
+            foreach (string[] file in filenameCleaner.Duplicates)
+            {
+                duplicatesForm.addItem(file);
             }
             duplicatesForm.ShowDialog();
         }
@@ -105,6 +117,14 @@ namespace PeriodKiller
         private void enableFilenameProcessing_CheckedChanged(object sender, EventArgs e)
         {
             if (enableFilenameProcessing.Checked)
+            {
+                this.filenameProcessingEnabled = true;
+            }
+            else
+            {
+                this.filenameProcessingEnabled = false;
+            }
+            if (this.filenameProcessingEnabled == true || this.filenameVariableRemovalEnabled == true)
             {
                 fixFolders.Text = "Clean File and Folder Names";
             }
@@ -135,16 +155,26 @@ namespace PeriodKiller
         {
             if (enableFilenameVariableRemoval.Checked)
             {
+                this.filenameVariableRemovalEnabled = true;
                 cleanFilenameTextPanel.Visible = true;
                 cleanTextPanel.Visible = true;
             }
             else
             {
+                this.filenameVariableRemovalEnabled = false;
                 cleanFilenameTextPanel.Visible = false;
                 if (cleanFolderTextPanel.Visible == false)
                 {
                     cleanTextPanel.Visible = false;
                 }
+            }
+            if (this.filenameProcessingEnabled == true || this.filenameVariableRemovalEnabled == true)
+            {
+                fixFolders.Text = "Clean File and Folder Names";
+            }
+            else
+            {
+                fixFolders.Text = "Clean Folder Names";
             }
         }
     }

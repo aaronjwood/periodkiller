@@ -9,9 +9,10 @@ namespace PeriodKiller
         {
             InitializeComponent();
         }
-        public String addItem
+        public void addItem(string[] item)
         {
-            set { this.duplicateFolders.Items.Add(value); }
+            ListViewItem duplicate = new ListViewItem(item);
+            this.duplicateFolders.Items.Add(duplicate);
         }
     }
 }

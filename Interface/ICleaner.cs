@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace PeriodKiller.Interface
 {
@@ -13,6 +14,10 @@ namespace PeriodKiller.Interface
         {
             get;
             set;
+        }
+        List<string[]> Duplicates
+        {
+            get;
         }
         void removePeriods(FolderBrowserDialog selectedFolder);
         void removeText(FolderBrowserDialog selectedFolder, string text);

@@ -18,9 +18,9 @@ namespace PeriodKiller
             get;
             set;
         }
-        private List<string> duplicates = new List<string>();
+        private List<string[]> duplicates = new List<string[]>();
 
-        public List<string> Duplicates
+        public List<string[]> Duplicates
         {
             get
             {
@@ -57,7 +57,8 @@ namespace PeriodKiller
                     }
                     else
                     {
-                        this.duplicates.Add(directory);
+                        string[] duplicate = { "Folder", directory, destinationDirectory, destinationDirectory };
+                        this.duplicates.Add(duplicate);
                     }
                 }
             }
@@ -101,7 +102,8 @@ namespace PeriodKiller
                         }
                         else
                         {
-                            this.duplicates.Add(directoryName);
+                            string[] duplicate = { "Folder", sourceDirectory, destinationDirectory, destinationDirectory };
+                            this.duplicates.Add(duplicate);
                         }
                     }
                 }
