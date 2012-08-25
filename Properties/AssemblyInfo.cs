@@ -7,7 +7,7 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Period Killer")]
-[assembly: AssemblyDescription("Removes periods and, optionally, a chunk of text from folders in a given directory.")]
+[assembly: AssemblyDescription("Remove periods and, optionally, a chunk of text from directory and file names.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Aaron J Wood")]
 [assembly: AssemblyProduct("Period Killer")]
