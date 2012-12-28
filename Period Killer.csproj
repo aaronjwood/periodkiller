@@ -55,7 +55,7 @@
     <StartupObject>WPF.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>pk.ico</ApplicationIcon>
+    <ApplicationIcon>res\pk.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -139,7 +139,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pk.ico" />
+    <Resource Include="res\pk.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
