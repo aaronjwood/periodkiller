@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF
+namespace PeriodKiller
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -32,56 +32,65 @@ namespace WPF
 
         private void selectFolderButton_Click(object sender, RoutedEventArgs e)
         {
-            //When a folder is selected, set the label, animate the window's width and height according to the length of the label, and show additional controls
+            //When a folder is selected, set the label, animate the window's width and height, and show additional controls
             if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                //Animate the window once a folder has been selected
+                if (this.selectedFolder == null)
+                {
+                    animateWindowHeight(Application.Current.MainWindow, 500, .5, new Action(() =>
+                    {
+                        animateWindowWidth(Application.Current.MainWindow, 500, .5, new Action(() =>
+                        {
+                            //TODO fade in selectedFolderLabel
+                        }));
+                    }));
+                }
+                
+                //Set the path selected
                 this.selectedFolder = this.folderDialog.SelectedPath;
                 selectedFolderLabel.Content = this.selectedFolder;
                 selectedFolderLabel.Visibility = Visibility.Visible;
-
-                //Measure the size of the label to be used for animating the window
-                selectedFolderLabel.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
-                selectedFolderLabel.Arrange(new Rect(selectedFolderLabel.DesiredSize));
-
-                //Animate the window if the label is long
-                animateWindowWidth(Application.Current.MainWindow, selectedFolderLabel.ActualWidth + 30, .5);
-
             }
         }
 
-        private void animateWindowHeight(Window window, double height, double duration)
+        private void animateWindowHeight(Window window, double height, double duration, Action callback = null)
         {
             window.BeginInit();
-            window.Dispatcher.BeginInvoke(new Action(() =>
+            window.Dispatcher.BeginInvoke((Action)(() =>
             {
                 DoubleAnimation windowAnimation = new DoubleAnimation();
                 windowAnimation.Duration = new Duration(TimeSpan.FromSeconds(duration));
                 windowAnimation.From = window.Height;
                 windowAnimation.To = height;
                 windowAnimation.FillBehavior = FillBehavior.HoldEnd;
-                windowAnimation.Completed += new EventHandler(delegate(object sender, EventArgs e)
+
+                //If a callback is passed, execute it using a lambda expression
+                if (callback != null)
                 {
-                    //TODO handle callback here
-                });
+                    windowAnimation.Completed += (s, e) => callback();
+                }
                 window.BeginAnimation(Window.HeightProperty, windowAnimation);
             }), null);
             window.EndInit();
         }
 
-        private void animateWindowWidth(Window window, double width, double duration)
+        private void animateWindowWidth(Window window, double width, double duration, Action callback = null)
         {
             window.BeginInit();
-            window.Dispatcher.BeginInvoke(new Action(() =>
+            window.Dispatcher.BeginInvoke((Action)(() =>
             {
                 DoubleAnimation windowAnimation = new DoubleAnimation();
                 windowAnimation.Duration = new Duration(TimeSpan.FromSeconds(duration));
                 windowAnimation.From = window.Width;
                 windowAnimation.To = width;
                 windowAnimation.FillBehavior = FillBehavior.HoldEnd;
-                windowAnimation.Completed += new EventHandler(delegate(object sender, EventArgs e)
+
+                //If a callback is passed, execute it using a lambda expression
+                if (callback != null)
                 {
-                    //TODO handle callback here
-                });
+                    windowAnimation.Completed += (s, e) => callback();
+                }
                 window.BeginAnimation(Window.WidthProperty, windowAnimation);
             }), null);
             window.EndInit();
