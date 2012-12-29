@@ -42,7 +42,8 @@ namespace PeriodKiller
                     {
                         animateWindowWidth(Application.Current.MainWindow, 500, .5, new Action(() =>
                         {
-                            //TODO fade in selectedFolderLabel
+                            animateControlOpacity(selectedFolderLabel, 1, 1);
+                            animateControlOpacity(fixFoldersButton, 1, 1);
                         }));
                     }));
                 }
@@ -50,7 +51,7 @@ namespace PeriodKiller
                 //Set the path selected
                 this.selectedFolder = this.folderDialog.SelectedPath;
                 selectedFolderLabel.Content = this.selectedFolder;
-                selectedFolderLabel.Visibility = Visibility.Visible;
+
             }
         }
 
@@ -94,6 +95,17 @@ namespace PeriodKiller
                 window.BeginAnimation(Window.WidthProperty, windowAnimation);
             }), null);
             window.EndInit();
+        }
+
+        private void animateControlOpacity(Control control, double opacity, double duration)
+        {
+            control.BeginInit();
+            control.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                DoubleAnimation selectedFolderAnimation = new DoubleAnimation(opacity, new Duration(TimeSpan.FromSeconds(duration)));
+                control.BeginAnimation(Label.OpacityProperty, selectedFolderAnimation);
+            }), null);
+            control.EndInit();
         }
     }
 }

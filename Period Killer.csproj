@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>WPF.App</StartupObject>
+    <StartupObject>PeriodKiller.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>res\pk.ico</ApplicationIcon>
