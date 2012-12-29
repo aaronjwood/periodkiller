@@ -1,0 +1,9 @@
+﻿<Window x:Class="PeriodKiller.Windows.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="100" Width="200" WindowStyle="None" Title="About" ResizeMode="NoResize" AllowsTransparency="True" BorderThickness="1" BorderBrush="#FF003030">
+   
+        <Button x:Name="closeButton" Width="20" Height="20" Content="X" Margin="178,0,0,78" Click="Close_Button_Click"/>
+    
+        
+</Window>

@@ -12,20 +12,21 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PeriodKiller.Windows;
 
-namespace PeriodKiller
+namespace PeriodKiller.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PeriodKiller : Window
     {
         private System.Windows.Forms.FolderBrowserDialog folderDialog = new System.Windows.Forms.FolderBrowserDialog();
         private string selectedFolder;
         private bool filenameProcessingEnabled = false;
         private bool filenameVariableRemovalEnabled = false;
 
-        public MainWindow()
+        public PeriodKiller()
         {
             InitializeComponent();
         }
@@ -106,6 +107,14 @@ namespace PeriodKiller
                 control.BeginAnimation(Label.OpacityProperty, selectedFolderAnimation);
             }), null);
             control.EndInit();
+        }
+
+        private void Menu_About_Click(object sender, EventArgs e)
+        {
+            About aboutWindow = new About();
+            aboutWindow.Owner = this;
+            aboutWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            aboutWindow.ShowDialog();
         }
     }
 }
