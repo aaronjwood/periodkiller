@@ -1,10 +1,16 @@
 ﻿<Window x:Class="PeriodKiller.Windows.PeriodKiller"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Period Killer" Height="127" Width="235" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Period Killer" Height="127" Width="235" ResizeMode="CanMinimize">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File"/>
+            <MenuItem Header="File">
+                <MenuItem Header="Options">
+                    <MenuItem IsCheckable="True" Header="Process Filenames"/>
+                    <MenuItem IsCheckable="True" Header="Remove Folder Text"/>
+                    <MenuItem IsCheckable="True" Header="Remove Filename Text"/>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="Help" Click="Menu_About_Click">
                 <MenuItem Header="About"/>
             </MenuItem>
@@ -19,7 +25,7 @@
             <TextBlock x:Name="programTitle" Margin="5,5" HorizontalAlignment="Center" Text="Period Killer" VerticalAlignment="Top" Foreground="#FF003030" FontSize="18" FontWeight="Light" Grid.Row="0"/>
             <Button x:Name="selectFolderButton" Margin="5,5" Width="200" Content="Select a folder" VerticalAlignment="Top" Click="selectFolderButton_Click" BorderThickness="1" Grid.Row="1"/>
             <Label x:Name="selectedFolderLabel" Margin="5,5" Content="" VerticalAlignment="Top" FontSize="11" Foreground="#FF003030" Grid.Row="2" HorizontalAlignment="Left" Opacity="0" />
-            <Button x:Name="fixFoldersButton" Content="Clean Folder Names" VerticalAlignment="Bottom" Grid.Row="3" Opacity="0"/>
+            <Button x:Name="fixFoldersButton" Content="Clean Folder Names" Margin="10 0 10 10" VerticalAlignment="Bottom" Grid.Row="3" Opacity="0"/>
 
         </Grid>
     </DockPanel>

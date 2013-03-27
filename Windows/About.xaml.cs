@@ -23,6 +23,11 @@ namespace PeriodKiller.Windows
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Event handler for the close button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

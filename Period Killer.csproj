@@ -90,6 +90,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Class\Messages.cs" />
+    <Compile Include="Cleaners\FilenameCleaner.cs" />
+    <Compile Include="Cleaners\FolderCleaner.cs" />
+    <Compile Include="Interface\ICleaner.cs" />
     <Compile Include="Windows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
