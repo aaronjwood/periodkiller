@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -56,6 +57,26 @@ namespace PeriodKiller.Windows
                 selectedFolder = this.folderDialog.SelectedPath;
                 selectedFolderLabel.Content = selectedFolder;
 
+            }
+        }
+
+        /// <summary>
+        /// Event handler for button to being processing items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fixFoldersButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            //Make sure the user has selected a folder
+            if (selectedFolder != "")
+            {
+
+                //Make sure the directory hasn't been deleted outside of the program
+                if(!Directory.Exists(selectedFolder))
+                {
+
+                }
             }
         }
 

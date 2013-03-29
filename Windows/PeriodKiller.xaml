@@ -25,7 +25,7 @@
             <TextBlock x:Name="programTitle" Margin="5,5" HorizontalAlignment="Center" Text="Period Killer" VerticalAlignment="Top" Foreground="#FF003030" FontSize="18" FontWeight="Light" Grid.Row="0"/>
             <Button x:Name="selectFolderButton" Margin="5,5" Width="200" Content="Select a folder" VerticalAlignment="Top" Click="selectFolderButton_Click" BorderThickness="1" Grid.Row="1"/>
             <Label x:Name="selectedFolderLabel" Margin="5,5" Content="" VerticalAlignment="Top" FontSize="11" Foreground="#FF003030" Grid.Row="2" HorizontalAlignment="Left" Opacity="0" />
-            <Button x:Name="fixFoldersButton" Content="Clean Folder Names" Margin="10 0 10 10" VerticalAlignment="Bottom" Grid.Row="3" Opacity="0"/>
+            <Button x:Name="fixFoldersButton" Content="Clean Folder Names" Margin="10 0 10 10" VerticalAlignment="Bottom" Grid.Row="3" Opacity="0" Click="fixFoldersButton_Click"/>
 
         </Grid>
     </DockPanel>

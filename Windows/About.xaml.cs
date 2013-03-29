@@ -35,6 +35,11 @@ namespace PeriodKiller.Windows
             this.Close();
         }
 
+        /// <summary>
+        /// Event handler for link in about window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Hyperlink_AJW(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
