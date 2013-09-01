@@ -8,6 +8,16 @@ namespace PeriodKiller.Interface
 {
     interface ICleaner
     {
+
+        /// <summary>
+        /// Get/set whether or not recursive processing should be applied
+        /// </summary>
+        bool recursiveProcessingEnabled
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Get/set the number of periods processed
         /// </summary>

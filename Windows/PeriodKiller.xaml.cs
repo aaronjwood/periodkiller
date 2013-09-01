@@ -24,13 +24,14 @@ namespace PeriodKiller.Windows
     /// </summary>
     public partial class PeriodKiller : Window
     {
-        private System.Windows.Forms.FolderBrowserDialog folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+        private System.Windows.Forms.FolderBrowserDialog folderDialog;
         private static string selectedFolder;
-        private FolderCleaner folderCleaner = new FolderCleaner();
-        private FilenameCleaner filenameCleaner = new FilenameCleaner();
-        private bool filenameProcessingEnabled = false;
-        private bool removeFolderTextEnabled = false;
-        private bool removeFilenameTextEnabled = false;
+        private FolderCleaner folderCleaner;
+        private FilenameCleaner filenameCleaner;
+        private bool filenameProcessingEnabled;
+        private bool removeFolderTextEnabled;
+        private bool removeFilenameTextEnabled;
+        private bool recursiveProcessingEnabled;
 
         public PeriodKiller()
         {
@@ -44,6 +45,7 @@ namespace PeriodKiller.Windows
         /// <param name="e"></param>
         private void selectFolderButton_Click(object sender, RoutedEventArgs e)
         {
+            this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
             //When a folder is selected, set the label, animate the window's width and height, and show additional controls
             if (this.folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -63,7 +65,6 @@ namespace PeriodKiller.Windows
                 //Set the path selected
                 selectedFolder = this.folderDialog.SelectedPath;
                 this.selectedFolderLabel.Content = selectedFolder;
-
             }
         }
 
@@ -86,9 +87,8 @@ namespace PeriodKiller.Windows
                 return;
             }
 
-            //Reset counts from previous run (if any)
-            folderCleaner.resetCounts();
-            filenameCleaner.resetCounts();
+            this.folderCleaner = new FolderCleaner(this.recursiveProcessingEnabled);
+            this.filenameCleaner = new FilenameCleaner(this.recursiveProcessingEnabled);
 
             //Remove a string from each directory if option is checked and the text box isn't empty
             if (this.removeFolderTextEnabled && this.removeFolderTextBox.Text != "")
@@ -96,14 +96,14 @@ namespace PeriodKiller.Windows
                 folderCleaner.removeText(this.folderDialog, this.removeFolderTextBox.Text);
             }
 
-            //Remove periods from directory names
-            folderCleaner.removePeriods(this.folderDialog);
-
             //Remove a string from each file if option is checked and the text box isn't empty
             if (this.removeFilenameTextEnabled && this.removeFilenameTextBox.Text != "")
             {
                 filenameCleaner.removeText(this.folderDialog, this.removeFilenameTextBox.Text);
             }
+
+            //Remove periods from directory names
+            folderCleaner.removePeriods(this.folderDialog);
 
             //Remove periods from filenames if the option has been selected
             if (this.filenameProcessingEnabled)
@@ -232,6 +232,7 @@ namespace PeriodKiller.Windows
         private void Menu_ProcessFilenames_Checked(object sender, RoutedEventArgs e)
         {
             this.filenameProcessingEnabled = true;
+            this.fixFoldersButton.Content = "Clean Directory and File Names";
         }
 
         /// <summary>
@@ -242,6 +243,7 @@ namespace PeriodKiller.Windows
         private void Menu_ProcessFilenames_Unchecked(object sender, RoutedEventArgs e)
         {
             this.filenameProcessingEnabled = false;
+            this.fixFoldersButton.Content = "Clean Directory Names";
         }
 
         /// <summary>
@@ -290,6 +292,26 @@ namespace PeriodKiller.Windows
             this.removeFilenameTextEnabled = false;
             this.animateControlOpacity(this.removeFilenameTextLabel, 0, 1);
             this.animateControlOpacity(this.removeFilenameTextBox, 0, 1);
+        }
+
+        /// <summary>
+        /// Event handler for the checkable option to enable recursive processing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Menu_RecursiveProcessing_Checked(object sender, RoutedEventArgs e)
+        {
+            this.recursiveProcessingEnabled = true;
+        }
+
+        /// <summary>
+        /// Event handler for the checkable option to disable recursive processing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Menu_RecursiveProcessing_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.recursiveProcessingEnabled = false;
         }
 
         /// <summary>

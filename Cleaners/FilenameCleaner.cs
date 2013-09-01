@@ -12,6 +12,17 @@ namespace PeriodKiller.Cleaners
     {
         private List<string[]> duplicates = new List<string[]>();
 
+        public FilenameCleaner(bool recursiveProcessing)
+        {
+            this.recursiveProcessingEnabled = recursiveProcessing;
+        }
+
+        public bool recursiveProcessingEnabled
+        {
+            get;
+            set;
+        }
+
         public int numPeriods
         {
             get;
@@ -38,27 +49,42 @@ namespace PeriodKiller.Cleaners
         /// <param name="selectedFolder">The folder that has been selected</param>
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
-            //Start removing the periods from file names
-            string[] files = Directory.GetFiles(selectedFolder.SelectedPath);
-            foreach (string file in files)
-            {
-                //Get the filename without the extension
-                string filename = Path.GetFileNameWithoutExtension(file);
+            Stack<FileInfo> files = new Stack<FileInfo>();
 
-                if (filename.Contains("."))
+            //If recursive processing is enabled then grab all the directories, otherwise grab only the top level directories
+            string[] items;
+            if (!this.recursiveProcessingEnabled)
+            {
+                items = Directory.GetFiles(selectedFolder.SelectedPath);
+            }
+            else
+            {
+                items = Directory.GetFiles(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
+            }
+
+            foreach (string file in items)
+            {
+                files.Push(new FileInfo(file));
+            }
+
+            while (files.Count > 0)
+            {
+                FileInfo file = files.Pop();
+
+                //Make sure we aren't capturing the extension
+                if (Path.GetFileNameWithoutExtension(file.Name).Contains("."))
                 {
                     //Build the absolute path with the modified filename
-                    string parentDirectory = Path.GetDirectoryName(file);
-                    string destinationFile = filename.Replace(".", " ");
-                    string extension = Path.GetExtension(file);
-                    destinationFile = Path.Combine(parentDirectory, destinationFile + extension);
+                    string parentDirectory = Directory.GetParent(file.FullName).FullName;
+                    string destinationFile = Path.GetFileNameWithoutExtension(file.Name).Replace(".", " ");
+                    destinationFile = Path.Combine(parentDirectory, destinationFile).Trim() + file.Extension;
 
                     //Does the file already exist?
                     if (!File.Exists(destinationFile))
                     {
                         try
                         {
-                            File.Move(file, destinationFile);
+                            File.Move(file.FullName, destinationFile);
                             this.numPeriods++;
                         }
                         catch (IOException e)
@@ -68,7 +94,7 @@ namespace PeriodKiller.Cleaners
                     }
                     else
                     {
-                        string[] duplicate = { "File", file, destinationFile, destinationFile };
+                        string[] duplicate = { "File", file.FullName, destinationFile, destinationFile };
                         this.duplicates.Add(duplicate);
                     }
                 }
@@ -82,34 +108,47 @@ namespace PeriodKiller.Cleaners
         /// <param name="variable">The text to remove from each filename</param>
         public void removeText(FolderBrowserDialog selectedFolder, string variable)
         {
-            string[] files = Directory.GetFiles(selectedFolder.SelectedPath);
-            foreach (string file in files)
+            Stack<FileInfo> files = new Stack<FileInfo>();
+
+            string[] items;
+            if (!this.recursiveProcessingEnabled)
             {
-                //Get the filename without the extension
-                string filename = Path.GetFileNameWithoutExtension(file);
+                items = Directory.GetFiles(selectedFolder.SelectedPath);
+            }
+            else
+            {
+                items = Directory.GetFiles(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
+            }
 
-                //Convert the filename and variable to lowercase to ignore case
-                string lowerVariable = variable.ToLower();
-                string lowerFilename = filename.ToLower();
+            foreach (string file in items)
+            {
+                files.Push(new FileInfo(file));
+            }
 
-                if (lowerFilename.Contains(lowerVariable))
+            while (files.Count > 0)
+            {
+                FileInfo file = files.Pop();
+
+                //Get the parent of each directory and the actual directory name that we'll be working with
+                string parentDirectory = Directory.GetParent(file.FullName).FullName;
+                string currentFile = Path.GetFileNameWithoutExtension(file.Name);
+
+                if (currentFile.IndexOf(variable, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    //Make sure we're not removing the entire filename!
-                    if (lowerFilename.IndexOf(lowerVariable) >= 0 && lowerFilename.Substring(0, lowerFilename.IndexOf(lowerVariable)) != "")
+                    //Make sure we're not removing the entire folder name!
+                    if (currentFile.IndexOf(variable, StringComparison.OrdinalIgnoreCase) >= 0 && currentFile.Substring(0, currentFile.IndexOf(variable, StringComparison.OrdinalIgnoreCase)) != "")
                     {
-                        //Build the absolute path
-                        string parentDirectory = Path.GetDirectoryName(file);
-                        int idx = lowerFilename.IndexOf(lowerVariable);
-                        string extension = Path.GetExtension(file);
-                        string newFilename = filename.Substring(0, idx) + extension;
-                        string destinationFile = Path.Combine(parentDirectory, newFilename);
+                        //Get the index based on the lowercase versions at which to start removing text
+                        int idx = currentFile.IndexOf(variable, StringComparison.OrdinalIgnoreCase);
+                        string sourceFile = Path.Combine(parentDirectory, currentFile + file.Extension);
+                        string destinationFile = Path.Combine(parentDirectory, currentFile.Substring(0, idx)).Trim() + file.Extension;
 
-                        //Does the file already exist?
-                        if (!File.Exists(destinationFile))
+                        //Does the directory already exist?
+                        if (!Directory.Exists(destinationFile))
                         {
                             try
                             {
-                                File.Move(file, destinationFile);
+                                File.Move(sourceFile, destinationFile);
                                 this.numRenames++;
                             }
                             catch (IOException e)
@@ -117,9 +156,11 @@ namespace PeriodKiller.Cleaners
                                 MessageBox.Show(e.Message);
                             }
                         }
+
+                        //The directory exists, add it to the duplicate structure
                         else
                         {
-                            string[] duplicate = { "File", file, destinationFile, destinationFile };
+                            string[] duplicate = { "Folder", sourceFile, destinationFile, destinationFile };
                             this.duplicates.Add(duplicate);
                         }
                     }
@@ -127,16 +168,5 @@ namespace PeriodKiller.Cleaners
             }
         }
 
-        //TODO handle removing text from filenames
-
-        /// <summary>
-        /// Reset the number of operations performed and clear the duplicates list
-        /// </summary>
-        public void resetCounts()
-        {
-            this.numPeriods = 0;
-            this.numRenames = 0;
-            this.duplicates.Clear();
-        }
     }
 }

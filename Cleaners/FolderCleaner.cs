@@ -12,6 +12,17 @@ namespace PeriodKiller.Cleaners
     {
         private List<string[]> duplicates = new List<string[]>();
 
+        public FolderCleaner(bool recursiveProcessing)
+        {
+            this.recursiveProcessingEnabled = recursiveProcessing;
+        }
+
+        public bool recursiveProcessingEnabled
+        {
+            get;
+            set;
+        }
+
         public int numPeriods
         {
             get;
@@ -38,24 +49,41 @@ namespace PeriodKiller.Cleaners
         /// <param name="selectedFolder">The folder that has been selected</param>
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
-            //Start removing the periods from folder names
-            string[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
-            foreach (string directory in directories)
-            {
-                string currentDirectory = new DirectoryInfo(directory).Name;
+            Stack<DirectoryInfo> directories = new Stack<DirectoryInfo>();
 
-                if (currentDirectory.Contains("."))
+            //If recursive processing is enabled then grab all the directories, otherwise grab only the top level directories
+            string[] items;
+            if (!this.recursiveProcessingEnabled)
+            {
+                items = Directory.GetDirectories(selectedFolder.SelectedPath);
+            }
+            else
+            {
+                items = Directory.GetDirectories(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
+            }
+
+            foreach (string directory in items)
+            {
+                directories.Push(new DirectoryInfo(directory));
+            }
+
+            while (directories.Count > 0)
+            {
+                DirectoryInfo directory = directories.Pop();
+
+                if (directory.Name.Contains("."))
                 {
                     //Build the absolute path with the modified directory name
-                    string parentDirectory = Path.GetDirectoryName(directory);
-                    string destinationDirectory = currentDirectory.Replace(".", " ");
-                    destinationDirectory = Path.Combine(parentDirectory, destinationDirectory);
+                    string parentDirectory = Directory.GetParent(directory.FullName).FullName;
+                    string destinationDirectory = directory.Name.Replace(".", " ");
+                    destinationDirectory = Path.Combine(parentDirectory, destinationDirectory).Trim();
 
+                    //Rename the directory if the directory doesn't already exist
                     if (!Directory.Exists(destinationDirectory))
                     {
                         try
                         {
-                            Directory.Move(directory, destinationDirectory);
+                            Directory.Move(directory.FullName, destinationDirectory);
                             this.numPeriods++;
                         }
                         catch (IOException e)
@@ -65,7 +93,7 @@ namespace PeriodKiller.Cleaners
                     }
                     else
                     {
-                        string[] duplicate = { "Folder", directory, destinationDirectory, destinationDirectory };
+                        string[] duplicate = { "Folder", directory.FullName, destinationDirectory, destinationDirectory };
                         this.duplicates.Add(duplicate);
                     }
                 }
@@ -79,26 +107,41 @@ namespace PeriodKiller.Cleaners
         /// <param name="variable">The text to remove from each folder name</param>
         public void removeText(FolderBrowserDialog selectedFolder, string variable)
         {
-            string[] directories = Directory.GetDirectories(selectedFolder.SelectedPath);
-            foreach (string directoryName in directories)
+            Stack<DirectoryInfo> directories = new Stack<DirectoryInfo>();
+
+            //If recursive processing is enabled then grab all the directories, otherwise grab only the top level directories
+            string[] dirs;
+            if (!this.recursiveProcessingEnabled)
             {
+                dirs = Directory.GetDirectories(selectedFolder.SelectedPath);
+            }
+            else
+            {
+                dirs = Directory.GetDirectories(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
+            }
+
+            foreach (string directory in dirs)
+            {
+                directories.Push(new DirectoryInfo(directory));
+            }
+
+            while (directories.Count > 0)
+            {
+                DirectoryInfo directory = directories.Pop();
+
                 //Get the parent of each directory and the actual directory name that we'll be working with
-                string directoryParent = Directory.GetParent(directoryName).FullName;
-                string directory = directoryName.Substring(directoryName.LastIndexOf("\\") + 1);
+                string parentDirectory = Directory.GetParent(directory.FullName).FullName;
+                string currentDirectory = directory.Name;
 
-                //Convert the directory name and the variable to lowercase to ignore case
-                string lowerDirectory = directory.ToLower();
-                string lowerVariable = variable.ToLower();
-
-                if (lowerDirectory.Contains(lowerVariable))
+                if (currentDirectory.IndexOf(variable, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     //Make sure we're not removing the entire folder name!
-                    if (lowerDirectory.IndexOf(lowerVariable) >= 0 && lowerDirectory.Substring(0, lowerDirectory.IndexOf(lowerVariable)) != "")
+                    if (currentDirectory.IndexOf(variable, StringComparison.OrdinalIgnoreCase) >= 0 && currentDirectory.Substring(0, currentDirectory.IndexOf(variable, StringComparison.OrdinalIgnoreCase)) != "")
                     {
                         //Get the index based on the lowercase versions at which to start removing text
-                        int idx = lowerDirectory.IndexOf(lowerVariable);
-                        string sourceDirectory = Path.Combine(directoryParent, directory);
-                        string destinationDirectory = Path.Combine(directoryParent, directory.Substring(0, idx));
+                        int idx = currentDirectory.IndexOf(variable, StringComparison.OrdinalIgnoreCase);
+                        string sourceDirectory = Path.Combine(parentDirectory, currentDirectory);
+                        string destinationDirectory = Path.Combine(parentDirectory, currentDirectory.Substring(0, idx)).Trim();
 
                         //Does the directory already exist?
                         if (!Directory.Exists(destinationDirectory))
@@ -125,14 +168,5 @@ namespace PeriodKiller.Cleaners
             }
         }
 
-        /// <summary>
-        /// Reset the number of operations performed and clear the duplicates list
-        /// </summary>
-        public void resetCounts()
-        {
-            this.numPeriods = 0;
-            this.numRenames = 0;
-            this.duplicates.Clear();
-        }
     }
 }

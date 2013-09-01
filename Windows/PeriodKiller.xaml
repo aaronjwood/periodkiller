@@ -9,6 +9,7 @@
                     <MenuItem x:Name="processFilenames" IsCheckable="True" Header="Process Filenames" Checked="Menu_ProcessFilenames_Checked" Unchecked="Menu_ProcessFilenames_Unchecked"/>
                     <MenuItem x:Name="removeFolderText" IsCheckable="True" Header="Remove Folder Text" Checked="Menu_RemoveFolderText_Checked" Unchecked="Menu_RemoveFolderText_Unchecked"/>
                     <MenuItem x:Name="removeFilenameText" IsCheckable="True" Header="Remove Filename Text" Checked="Menu_RemoveFilenameText_Checked" Unchecked="Menu_RemoveFilenameText_Unchecked"/>
+                    <MenuItem x:Name="recursiveProcessing" IsCheckable="True" Header="Recursive Processing" Checked="Menu_RecursiveProcessing_Checked" Unchecked="Menu_RecursiveProcessing_Unchecked"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Help" Click="Menu_About_Click">
@@ -34,7 +35,7 @@
                 <TextBox Foreground="#FF003030" Opacity="0" Margin="0 10 0 0" x:Name="removeFilenameTextBox" Grid.Row="2" Grid.Column="2" Height="23" TextWrapping="Wrap" Text="" Width="120"/>
             </UniformGrid>
             <Label MouseLeftButtonUp="DuplicatesLabel_MouseLeftButtonUp" Opacity="0" Padding="0" Margin="5,5" Foreground="#A82A2A" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="duplicatesLabel" Grid.Row="4" Cursor="Hand"/>
-            <Button x:Name="fixFoldersButton" Content="Clean Folder Names" Margin="10 0 10 10" VerticalAlignment="Bottom" Grid.Row="5" Opacity="0" Click="fixFoldersButton_Click"/>
+            <Button x:Name="fixFoldersButton" Content="Clean Directory Names" Margin="10 0 10 10" VerticalAlignment="Bottom" Grid.Row="5" Opacity="0" Click="fixFoldersButton_Click"/>
         </Grid>
     </DockPanel>
     
