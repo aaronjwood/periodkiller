@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Period Killer")]
-[assembly: AssemblyDescription("Remove periods and, optionally, a chunk of text from directory and file names.")]
+[assembly: AssemblyDescription("Period Killer is a free and open source directory and filename cleaning tool written in C#. It is built with simplicity, speed, and efficiency in mind.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Aaron J Wood")]
 [assembly: AssemblyProduct("Period Killer")]
@@ -51,6 +51,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.0")]
+[assembly: AssemblyVersion("3.5.0.0")]
+[assembly: AssemblyFileVersion("3.5.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
