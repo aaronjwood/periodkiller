@@ -55,17 +55,35 @@ namespace PeriodKiller.Cleaners
             string[] items;
             if (!this.recursiveProcessingEnabled)
             {
-                items = Directory.GetDirectories(selectedFolder.SelectedPath);
+                try
+                {
+                    items = Directory.GetDirectories(selectedFolder.SelectedPath);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return;
+                }
             }
             else
             {
-                items = Directory.GetDirectories(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
+                try
+                {
+                    items = Directory.GetDirectories(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return;
+                }
             }
 
             foreach (string directory in items)
             {
                 directories.Push(new DirectoryInfo(directory));
             }
+
+            MessageBox.Show(directories.Count.ToString());
 
             while (directories.Count > 0)
             {
