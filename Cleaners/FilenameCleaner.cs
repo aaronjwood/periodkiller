@@ -1,10 +1,8 @@
-﻿using System;
+﻿using PeriodKiller.Interface;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
-using PeriodKiller.Interface;
+using System.Windows.Forms;
 
 namespace PeriodKiller.Cleaners
 {
