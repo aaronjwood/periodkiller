@@ -1,0 +1,42 @@
+﻿<Window x:Class="PeriodKiller.Windows.PeriodKiller"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Period Killer" Height="127" Width="235" ResizeMode="CanMinimize">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Options">
+                    <MenuItem x:Name="processFilenames" IsCheckable="True" Header="Process Filenames" Checked="Menu_ProcessFilenames_Checked" Unchecked="Menu_ProcessFilenames_Unchecked"/>
+                    <MenuItem x:Name="removeFolderText" IsCheckable="True" Header="Remove Folder Text" Checked="Menu_RemoveFolderText_Checked" Unchecked="Menu_RemoveFolderText_Unchecked"/>
+                    <MenuItem x:Name="removeFilenameText" IsCheckable="True" Header="Remove Filename Text" Checked="Menu_RemoveFilenameText_Checked" Unchecked="Menu_RemoveFilenameText_Unchecked"/>
+                    <MenuItem x:Name="recursiveProcessing" IsCheckable="True" Header="Recursive Processing" Checked="Menu_RecursiveProcessing_Checked" Unchecked="Menu_RecursiveProcessing_Unchecked"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help" Click="Menu_About_Click">
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="programTitle" Margin="5,5" HorizontalAlignment="Center" Text="Period Killer" VerticalAlignment="Top" Foreground="#FF003030" FontSize="18" FontWeight="Light" Grid.Row="0"/>
+            <Button x:Name="selectFolderButton" Margin="5,5" Width="200" Content="Select a folder" VerticalAlignment="Top" Click="selectFolderButton_Click" BorderThickness="1" Grid.Row="1"/>
+            <Label Padding="0" x:Name="selectedFolderLabel" Margin="5,5" Content="" VerticalAlignment="Top" FontSize="11" Foreground="#FF003030" Grid.Row="2" HorizontalAlignment="Left" Opacity="0" />
+            <UniformGrid Margin="5 25 0 0" VerticalAlignment="Bottom" Grid.Row="3">
+                <Label Foreground="#FF003030" Opacity="0" Padding="0" x:Name="removeFolderTextLabel"  Grid.Row="1" Grid.Column="1" Content="Text to remove from folders:"/>
+                <TextBox Foreground="#FF003030" Opacity="0" x:Name="removeFolderTextBox" Grid.Row="1" Grid.Column="2" Height="23" TextWrapping="Wrap" Text="" Width="120"/>
+                <Label Foreground="#FF003030" Opacity="0" Padding="0" Margin="0 10 0 0" x:Name="removeFilenameTextLabel" Grid.Row="2" Grid.Column="1" Content="Text to remove from files:"/>
+                <TextBox Foreground="#FF003030" Opacity="0" Margin="0 10 0 0" x:Name="removeFilenameTextBox" Grid.Row="2" Grid.Column="2" Height="23" TextWrapping="Wrap" Text="" Width="120"/>
+            </UniformGrid>
+            <Label MouseLeftButtonUp="DuplicatesLabel_MouseLeftButtonUp" Opacity="0" Padding="0" Margin="5,5" Foreground="#A82A2A" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="duplicatesLabel" Grid.Row="4" Cursor="Hand"/>
+            <Button x:Name="fixFoldersButton" Content="Clean Directory Names" Margin="10 0 10 10" VerticalAlignment="Bottom" Grid.Row="5" Opacity="0" Click="fixFoldersButton_Click"/>
+        </Grid>
+    </DockPanel>
+    
+</Window>

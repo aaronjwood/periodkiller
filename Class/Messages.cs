@@ -1,4 +1,4 @@
-﻿namespace PeriodKiller
+﻿namespace PeriodKiller.Class
 {
     class Messages
     {
@@ -17,6 +17,9 @@
             this.generateMessage();
         }
 
+        /// <summary>
+        /// Generates the appropriate message based on various conditions
+        /// </summary>
         private void generateMessage()
         {
             string generatedMessage = null;
@@ -39,6 +42,10 @@
             this.message = generatedMessage;
         }
 
+        /// <summary>
+        /// Checks to see if there has been a message generated
+        /// </summary>
+        /// <returns>True if a message exists, false otherwise</returns>
         public bool hasMessage()
         {
             if (this.message != null)
@@ -51,6 +58,10 @@
             }
         }
 
+        /// <summary>
+        /// Returns the generated message
+        /// </summary>
+        /// <returns>The string message</returns>
         public string getMessage()
         {
             return this.message;

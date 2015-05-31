@@ -1,36 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Period Killer", "Period Killer.csproj", "{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Period Killer", "Period Killer.csproj", "{E258B9D9-D35E-467A-AF94-7AE7570D2D42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|Itanium = Debug|Itanium
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|Itanium = Release|Itanium
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|Itanium.ActiveCfg = Debug|Itanium
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|Itanium.Build.0 = Debug|Itanium
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|x64.ActiveCfg = Debug|x64
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|x64.Build.0 = Debug|x64
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|x86.ActiveCfg = Debug|x86
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Debug|x86.Build.0 = Debug|x86
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|Itanium.ActiveCfg = Release|Itanium
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|Itanium.Build.0 = Release|Itanium
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|x64.ActiveCfg = Release|x64
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|x64.Build.0 = Release|x64
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|x86.ActiveCfg = Release|x86
-		{3BE23415-BD3B-4BF5-91AC-CBCE5B21E136}.Release|x86.Build.0 = Release|x86
+		{E258B9D9-D35E-467A-AF94-7AE7570D2D42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E258B9D9-D35E-467A-AF94-7AE7570D2D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E258B9D9-D35E-467A-AF94-7AE7570D2D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E258B9D9-D35E-467A-AF94-7AE7570D2D42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
