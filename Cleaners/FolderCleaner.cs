@@ -81,8 +81,6 @@ namespace PeriodKiller.Cleaners
                 directories.Push(new DirectoryInfo(directory));
             }
 
-            MessageBox.Show(directories.Count.ToString());
-
             while (directories.Count > 0)
             {
                 DirectoryInfo directory = directories.Pop();
