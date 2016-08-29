@@ -48,12 +48,11 @@ namespace PeriodKiller.Cleaners
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
 
-            //If recursive processing is enabled then grab all the directories, otherwise grab only the top level directories
+            //If recursive processing is enabled then grab all the files, otherwise grab the files in the immediate directory
             IEnumerable<String> allFiles = (!this.recursiveProcessingEnabled) ? Directory.EnumerateFiles(selectedFolder.SelectedPath) : Directory.EnumerateFiles(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
 
             foreach (string file in allFiles)
             {
-                //Make sure we aren't capturing the extension
                 string fileName = Path.GetFileNameWithoutExtension(file);
                 if (fileName.Contains("."))
                 {
