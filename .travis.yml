@@ -12,6 +12,4 @@ addons:
     project:
       name: "aaronjwood/periodkiller"
     notification_email: aaronjwood@gmail.com
-    build_command_prepend: "msbuild /t:Clean"
-    build_command: "msbuild /t:Rebuild"
     branch_pattern: master
