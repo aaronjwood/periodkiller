@@ -61,7 +61,7 @@ namespace PeriodKiller.Cleaners
                     string destinationFile = fileName.Replace(".", " ");
                     destinationFile = Path.Combine(parentDirectory, destinationFile).Trim() + Path.GetExtension(file);
 
-                    //Does the file already exist?
+                    //If the file exists don't move it, add it to the duplicates
                     if (!File.Exists(destinationFile))
                     {
                         try
