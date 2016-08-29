@@ -1,5 +1,5 @@
 language: csharp
-solution: "Period Killer.sln"
+solution: pk.sln
 
 env:
   global:
