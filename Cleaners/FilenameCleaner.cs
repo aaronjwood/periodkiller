@@ -47,58 +47,27 @@ namespace PeriodKiller.Cleaners
         /// <param name="selectedFolder">The folder that has been selected</param>
         public void removePeriods(FolderBrowserDialog selectedFolder)
         {
-            Stack<FileInfo> files = new Stack<FileInfo>();
 
             //If recursive processing is enabled then grab all the directories, otherwise grab only the top level directories
-            string[] items;
-            if (!this.recursiveProcessingEnabled)
-            {
-                try
-                {
-                    items = Directory.GetFiles(selectedFolder.SelectedPath);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    return;
-                }
-            }
-            else
-            {
-                try
-                {
-                    items = Directory.GetFiles(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    return;
-                }
-            }
+            IEnumerable<String> allFiles = (!this.recursiveProcessingEnabled) ? Directory.EnumerateFiles(selectedFolder.SelectedPath) : Directory.EnumerateFiles(selectedFolder.SelectedPath, "*", SearchOption.AllDirectories);
 
-            foreach (string file in items)
+            foreach (string file in allFiles)
             {
-                files.Push(new FileInfo(file));
-            }
-
-            while (files.Count > 0)
-            {
-                FileInfo file = files.Pop();
-
                 //Make sure we aren't capturing the extension
-                if (Path.GetFileNameWithoutExtension(file.Name).Contains("."))
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                if (fileName.Contains("."))
                 {
                     //Build the absolute path with the modified filename
-                    string parentDirectory = Directory.GetParent(file.FullName).FullName;
-                    string destinationFile = Path.GetFileNameWithoutExtension(file.Name).Replace(".", " ");
-                    destinationFile = Path.Combine(parentDirectory, destinationFile).Trim() + file.Extension;
+                    string parentDirectory = Directory.GetParent(file).FullName;
+                    string destinationFile = fileName.Replace(".", " ");
+                    destinationFile = Path.Combine(parentDirectory, destinationFile).Trim() + Path.GetExtension(file);
 
                     //Does the file already exist?
                     if (!File.Exists(destinationFile))
                     {
                         try
                         {
-                            File.Move(file.FullName, destinationFile);
+                            File.Move(file, destinationFile);
                             this.numPeriods++;
                         }
                         catch (IOException e)
@@ -108,7 +77,7 @@ namespace PeriodKiller.Cleaners
                     }
                     else
                     {
-                        string[] duplicate = { "File", file.FullName, destinationFile, destinationFile };
+                        string[] duplicate = { "File", file, destinationFile, destinationFile };
                         this.duplicates.Add(duplicate);
                     }
                 }
