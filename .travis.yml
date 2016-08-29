@@ -1,0 +1,15 @@
+language: csharp
+solution: "Period Killer.sln"
+
+env:
+  global:
+   - secure: "gBnc/fQGuEcVJqCPiJLnCNqr8MzM6ATMhZyLpjxwMf32ipV0FHlXr+dR9N59hFEtNVBafC62oefN+AlV9DIh9BxSzWCO40Sgo+ICPaLqEkdRY8iBmX5Bsr6aBcASYtnHwHG93S1JNSjbD3NLK3yM4EUGbXDpgRtCCGqvrOtATY4MXBRFuxbjIvarZcQHqMoHWLRgiwuYgurkkYT5CfkzhS3gdIxR8tRIQEDJem0xhDRbJAjbKnDIDCthRWSZotzghCQt8QMxxFKnKsmovjD90g1iwWELEOS3xn6eic1qQyQR8t0FcTC0qG+ouUUkkIYEwy5uXUelsx+Sw8uwzu2iUcxIaJyb/RTKQI+WJ3SN0DJubfKLE/eKs91W+046N8glqf8MVKzvryKOAec52tTuaIxgJzMMMXhkGSioeULpIhq1tM17jm3FtULPE4EXf+C5cVVqeAbDCrJBV0TV239zx1xjS0QtwPKxT9CmcsjyczevHuCzyZaiomrWiaIpdzhrLtWzDwmZQY37FsvRpqq3wu9+hHIXdoXVhmCSZzUS3mdg1LcHfv+rhoOWHHlJAo4c2NOxDE5BTlJG9OGLszI1+ADjrCXSNDPf/Qx4jCxXPPGKPpm/shWr5ZjQaKRzYafnDG0Q92e0tdQbx5t1cn2Zpiur4zJmCSTy8LqsS00yLrU="
+
+addons:
+  coverity_scan:
+    project:
+      name: "aaronjwood/periodkiller"
+    notification_email: aaronjwood@gmail.com
+    build_command_prepend: "msbuild /t:Clean"
+    build_command: "msbuild /t:Rebuild"
+    branch_pattern: master
